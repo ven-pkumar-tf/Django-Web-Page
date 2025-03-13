@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tamil Class Web Page</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}" defer></script>
 </head>
 <body>
 
     <!-- Header Section -->
     <header>
-        <h1>லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி        </h1>
+        <h1>லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி</h1>
         <!-- Navigation Bar -->
         <nav>
             <ul>
@@ -32,20 +33,25 @@
             </div>
         </div>
     </section>
+
     <section id="about_us">
-        <h2>நோக்கம் மற்றும் Mission</h2>
-        
         <div class="about-us-content">
-            <!-- Left Column: Text content -->
+            <!-- Left Column: Text content with swap functionality -->
             <div class="text-column">
-                <div class="text-content">
+                <div class="text-content" id="content1">
                     <h3>நோக்கம்</h3>
                     <p>தமிழ்மொழி இலக்கண, இலக்கிய, வரலாற்று அடிப்படை கொண்ட மிகப் பழமையானதொரு இந்திய மொழி. புலம்பெயர்ந்து வாழும் குழந்தைகளுக்கும், இளைஞர்களுக்கும் தமிழ் மொழி கற்றுத் தருவதே சியாட்டில் தமிழ் பள்ளியின் முக்கிய நோக்கமாகும். தமிழ் கற்பிப்பது மட்டுமல்லாமல், இசை, நடனம், நாடகம், போன்ற தமிழர் பண்பாட்டை ஒட்டிய நிகழ்ச்சிகளுக்கும் ஆதரவு தந்து தமிழையும், தமிழ் பண்பாட்டையும் போற்றுவது இப்பள்ளியின் விருப்பமாகும்.</p>
                 </div>
 
-                <div class="text-content">
+                <div class="text-content" id="content2">
                     <h3>Mission</h3>
                     <p>Tamil language is an ancient Indian Language with a long history and rich literature and comprehensive grammar. The main objective of Lake stevens STS Tamil School is to teach Tamil language to the Diaspora Children and Youth. In addition to teaching Tamil, ITA encourages Cultural activities such as music, dance, drama and any art form based on Tamil language and Tamil culture to promote Tamil and Tamil culture.</p>
+                </div>
+
+                <!-- Navigation buttons -->
+                <div class="nav-buttons">
+                    <button id="prevButton">Previous</button>
+                    <button id="nextButton">Next</button>
                 </div>
             </div>
 
@@ -59,7 +65,7 @@
             </div>
         </div>
     </section>
-
+    
     <section id="gen_info">
         <h2>Library</h2>
         <p>Explore our library of Tamil learning resources.</p>
@@ -69,6 +75,7 @@
         <h2>Contact</h2>
         <p>Contact us for more information.</p>
     </section>
+
     <section id="events">
         <h2>Contact</h2>
         <p>Contact us for more information.</p>
