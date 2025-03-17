@@ -1,79 +1,37 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
+/* General reset for margin and padding */
+* {
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa;
+    box-sizing: border-box;
 }
 
-/* Contact Section Styling */
-.contact-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; /* Aligns the map and form at the top */
-    width: 80%;
-    margin: auto;
-    padding: 40px 0;
-    gap: 20px;
+/* Ensure the header content is in a row */
+header {
+    display: flex; /* Aligns children elements in a row */
+    justify-content: space-between; /* Space between the school name and nav */
+    align-items: center; /* Vertically centers items */
+    padding: 10px 20px; /* Padding for the header */
 }
 
-/* Map Styling */
-.contact-map {
-    flex: 1;
-    min-width: 50%;
+/* Style for the school name */
+header h1 {
+    font-size: 24px;
+    margin-right: 20px; /* Adds some space between the school name and nav */
 }
 
-.contact-map iframe {
-    width: 100%;
-    height: 400px; /* Adjust height as needed */
-    border: none;
+/* Navigation style */
+nav ul {
+    list-style-type: none; /* Removes default list styling */
+    display: flex; /* Arranges the navigation items in a row */
+    padding: 0;
 }
 
-/* Form Styling */
-.contact-form {
-    flex: 1;
-    min-width: 50%;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+nav ul li {
+    margin-right: 20px; /* Adds space between navigation items */
 }
 
-/* Input Fields */
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Submit Button */
-.contact-form button[type="submit"] {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.contact-form button[type="submit"]:hover {
-    background-color: #218838;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .contact-container {
-        flex-direction: column;
-        text-align: left;
-    }
-    .contact-map,
-    .contact-form {
-        width: 100%;
-    }
-    .contact-map iframe {
-        height: 300px;
-    }
+nav ul li a {
+    text-decoration: none; /* Removes the underline from links */
+    color: #000; /* Sets text color */
+    font-size: 16px; /* Font size for navigation links */
 }
