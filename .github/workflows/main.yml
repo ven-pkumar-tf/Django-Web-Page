@@ -15,7 +15,7 @@ jobs:
 
       - name: "Azure Login"
         run: |
-          az login --service-principal --username "679bf607-d0e5-4ed2-8d84-6d2092e6d944" --password "rVt8Q~agJTwrRBnOBm1PymZl3pVhMi9VP8tgychW" --tenant "f9495402-3d3a-4324-81d6-47a9fe28909c"
+          az login --service-principal --username "679bf607-d0e5-4ed2-8d84-6d2092e6d944" --password "xK18Q~vSZ9r7y0AxqzC8j0_LTaXKISnj3vvX3cI8" --tenant "f9495402-3d3a-4324-81d6-47a9fe28909c"
           
       - name: Set up Python
         uses: actions/setup-python@v5
