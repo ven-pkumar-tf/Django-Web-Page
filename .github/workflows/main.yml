@@ -36,9 +36,14 @@ jobs:
         run: |
           python manage.py collectstatic --noinput
 
-      # Step 7: Deploy to Azure Web App
+       # Step 7: Package the application
+      - name: Zip Application
+        run: |
+          zip -r deployment-package.zip .  # This will create a zip of the whole project
+
+      # Step 8: Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: "tamil-web-page-service"  # Replace with your Azure Web App name
-          package: ${{ github.workspace }}/*  # Ensure the correct path to your project folder
+          package: deployment-package.zip  # Deploy the zip file created in the previous step
