@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
@@ -18,7 +13,7 @@ jobs:
           versionSpec: '3.x'
           addToPath: true
           architecture: 'x64'
-      
+
       - script: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -29,12 +24,18 @@ jobs:
           python manage.py migrate
         displayName: 'Run Migrations and Collect Static Files'
       
+      # Create a .zip package of the project
+      - script: |
+          zip -r django_project.zip .  # Create a zip of the project files
+        displayName: 'Create .zip File for Deployment'
+      
+      # Deploy to Azure Web App
       - task: AzureRmWebAppDeployment@5
         inputs:
           ConnectionType: 'AzureRM'
-          azureSubscription: 'aks-service-connection'
+          azureSubscription: 'aks-service-connection'  # Replace with your service connection name
           appType: 'webAppLinux'
-          WebAppName: 'tamil-web-page-service'
-          packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-          RuntimeStack: 'PYTHON:3.9'
+          WebAppName: 'tamil-web-page-service'  # Replace with your Azure Web App name
+          packageForLinux: '$(System.DefaultWorkingDirectory)/django_project.zip'  # Path to the .zip file
+          RuntimeStack: 'PYTHON:3.9'  # Ensure this matches the Python version for your app
           DeploymentTypeLinux: 'oneDeploy'
