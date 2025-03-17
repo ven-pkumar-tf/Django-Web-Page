@@ -1,9 +1,8 @@
 name: Deploy Django App to Azure Web App
 
 on:
-  push:
-    branches:
-      - develop  # Adjust if needed
+  workflow_dispatch:
+     # Adjust if needed
 
 jobs:
   deploy:
