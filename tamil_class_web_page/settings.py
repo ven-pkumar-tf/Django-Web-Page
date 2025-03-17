@@ -140,3 +140,24 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # Ensure the directory exists in case of manual testing
 import os
 os.makedirs(STATIC_ROOT, exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'django_error.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
+
+ALLOWED_HOSTS = ['tamil-web-page-service-afd2huafegd7b5em.westus-01.azurewebsites.net']
