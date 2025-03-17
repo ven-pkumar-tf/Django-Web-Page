@@ -31,12 +31,14 @@ jobs:
         run: |
           python manage.py migrate
 
+      # Step 6: Collect Static Files
       - name: Collect Static Files
         run: |
           python manage.py collectstatic --noinput
 
+      # Step 7: Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: "tamil-web-page-service"  # Replace with your Azure Web App name
-          package: .
+          package: ${{ github.workspace }}  # Ensure the correct path to your project folder
