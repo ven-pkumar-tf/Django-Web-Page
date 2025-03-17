@@ -163,4 +163,4 @@ LOGGING = {
     },
 }
 
-ALLOWED_HOSTS = ['myproductiondomain.com', 'tamil-web-page-service-afd2huafegd7b5em.westus-01.azurewebsites.net']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tamil-web-page-service-afd2huafegd7b5em.westus-01.azurewebsites.net', 'https://tamil-web-page-service-afd2huafegd7b5em.westus-01.azurewebsites.net/']

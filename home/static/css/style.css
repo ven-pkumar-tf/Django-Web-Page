@@ -1,37 +1,222 @@
-/* General reset for margin and padding */
+/* Reset some default styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Ensure the header content is in a row */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header Section */
 header {
-    display: flex; /* Aligns children elements in a row */
-    justify-content: space-between; /* Space between the school name and nav */
-    align-items: center; /* Vertically centers items */
-    padding: 10px 20px; /* Padding for the header */
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
 }
 
-/* Style for the school name */
 header h1 {
-    font-size: 24px;
-    margin-right: 20px; /* Adds some space between the school name and nav */
+    font-size: 36px;
 }
 
-/* Navigation style */
+/* Navigation Bar */
 nav ul {
-    list-style-type: none; /* Removes default list styling */
-    display: flex; /* Arranges the navigation items in a row */
+    list-style-type: none;
     padding: 0;
+    display: flex;
+    justify-content: center;
 }
 
 nav ul li {
-    margin-right: 20px; /* Adds space between navigation items */
+    margin: 0 15px;
 }
 
 nav ul li a {
-    text-decoration: none; /* Removes the underline from links */
-    color: #000; /* Sets text color */
-    font-size: 16px; /* Font size for navigation links */
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #FFD700;
+}
+
+/* Main Content Section */
+section {
+    padding: 40px 20px;
+}
+
+#home {
+    background-color: #fff;
+    text-align: center;
+}
+
+.image-column {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.image-slideshow img {
+    max-width: 100%;
+    height: auto;
+    margin: 5px;
+    border-radius: 8px;
+}
+
+/* About Us Section */
+#about_us {
+    background-color: #fafafa;
+}
+
+.text-column {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.text-content {
+    width: 45%;
+}
+
+h3 {
+    color: #4CAF50;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* General Information Section */
+#gen_info {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Library Section */
+#library {
+    background-color: #e7e7e7;
+    padding: 40px 20px;
+}
+
+#library p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Events Section */
+#events {
+    background-color: #fff;
+    padding: 40px 20px;
+}
+
+.events-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.events-table th,
+.events-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.events-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.events-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.apply-link {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.apply-link:hover {
+    text-decoration: underline;
+}
+
+/* Contact Section */
+#contact {
+    background-color: #fafafa;
+    padding: 40px 20px;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-container {
+    width: 45%;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.map-container iframe {
+    border: none;
+    border-radius: 8px;
+}
+
+/* Footer Section */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
 }
