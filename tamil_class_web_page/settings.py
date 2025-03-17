@@ -120,6 +120,14 @@ USE_TZ = True
 
 # settings.py
 
+
+# Define where static files should be collected for deployment
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Ensure the directory exists in case of manual testing
+import os
+os.makedirs(STATIC_ROOT, exist_ok=True)
+
 # URL for serving static files (used in your templates)
 STATIC_URL = '/static/'
 
@@ -134,12 +142,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-# Define where static files should be collected for deployment
-STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Ensure the directory exists in case of manual testing
-import os
-os.makedirs(STATIC_ROOT, exist_ok=True)
 
 LOGGING = {
     'version': 1,
