@@ -41,4 +41,4 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: "tamil-web-page-service"  # Replace with your Azure Web App name
-          package: ${{ github.workspace }}  # Ensure the correct path to your project folder
+          package: ${{ github.workspace }}/*  # Ensure the correct path to your project folder
