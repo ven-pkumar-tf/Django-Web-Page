@@ -133,3 +133,10 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+
+# Define where static files should be collected for deployment
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Ensure the directory exists in case of manual testing
+import os
+os.makedirs(STATIC_ROOT, exist_ok=True)
