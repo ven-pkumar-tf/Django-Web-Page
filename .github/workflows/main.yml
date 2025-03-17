@@ -13,14 +13,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          client-id: "679bf607-d0e5-4ed2-8d84-6d2092e6d944"
-          tenant-id: "f9495402-3d3a-4324-81d6-47a9fe28909c"
-          subscription-id: "7275205d-c6ea-4e18-b0a9-4d92e37ae210"
-          client-secret: "rVt8Q~agJTwrRBnOBm1PymZl3pVhMi9VP8tgychW"
-
+      - name: "Azure Login"
+        run: |
+          az login --service-principal --username "679bf607-d0e5-4ed2-8d84-6d2092e6d944" --password "rVt8Q~agJTwrRBnOBm1PymZl3pVhMi9VP8tgychW" --tenant "f9495402-3d3a-4324-81d6-47a9fe28909c"
+          
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -35,5 +31,5 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "your-app-name"  # Replace with your Azure Web App name
+          app-name: "tamil-web-page-service"  # Replace with your Azure Web App name
           package: .
