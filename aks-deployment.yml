@@ -39,5 +39,6 @@ spec:
   ports:
     - protocol: TCP
       port: 8000
-      targetPort: 8000  # Expose container port externally
-  type: LoadBalancer  # Change to ClusterIP if not exposing externally
+      targetPort: 8000
+      nodePort: 30007  # Choose an available port
+  type: NodePort
