@@ -5,7 +5,7 @@ metadata:
   labels:
     app: django-app
 spec:
-  replicas: 1  # You can adjust this based on your needs (e.g., to scale the app)
+  replicas: 1  # Adjust based on your needs for scaling
   selector:
     matchLabels:
       app: django-app
@@ -16,18 +16,19 @@ spec:
     spec:
       containers:
         - name: django-container
-          image: tamilwebappacr.azurecr.io/ven-pkumar-tf/django-web-page:latest  # Replace with the image you built or pushed to a registry
+          image: tamilwebappacr.azurecr.io/ven-pkumar-tf/django-web-page:latest  # Replace with your correct image
           ports:
-            - containerPort: 8000  # Django runs on port 8000 by default
+            - containerPort: 8000  # Django default port
           env:
             - name: DJANGO_SETTINGS_MODULE
-              value: "tamil_class_web_page.settings"  # Replace with your project's settings module
+              value: "tamil_class_web_page.settings"  # Replace with your settings module
           volumeMounts:
             - name: static-volume
-              mountPath: /app/static  # If you have a static directory for Django
+              mountPath: /app/static  # Mount path for static files
       volumes:
         - name: static-volume
-          emptyDir: {}  # This is an example; replace with persistent storage if needed
+          emptyDir: {}  # Temporary storage; you might want persistent storage like PVC in production
+
 ---
 apiVersion: v1
 kind: Service
@@ -38,6 +39,7 @@ spec:
     app: django-app
   ports:
     - protocol: TCP
-      port: 8000
-      targetPort: 8000  # Expose port 8000 from the container to port 80 externally
-  type: LoadBalancer  # This will expose the service externally if you're on a cloud platform like AWS, GCP, etc.
+      port: 8000      # The port exposed by the service
+      targetPort: 8000  # The port the container listens on
+  type: LoadBalancer   # Expose service externally (requires cloud provider or use NodePort for local setups)
+
