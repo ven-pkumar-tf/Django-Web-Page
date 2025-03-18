@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+  labels:
+    app: django-app
+spec:
+  replicas: 1  # You can adjust this based on your needs (e.g., to scale the app)
+  selector:
+    matchLabels:
+      app: django-app
+  template:
+    metadata:
+      labels:
+        app: django-app
+    spec:
+      containers:
+        - name: django-container
+          image: my-django-app:latest  # Replace with the image you built or pushed to a registry
+          ports:
+            - containerPort: 8000  # Django runs on port 8000 by default
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: "your_project_name.settings"  # Replace with your project's settings module
+          volumeMounts:
+            - name: static-volume
+              mountPath: /app/static  # If you have a static directory for Django
+      volumes:
+        - name: static-volume
+          emptyDir: {}  # This is an example; replace with persistent storage if needed
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-service
+spec:
+  selector:
+    app: django-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000  # Expose port 8000 from the container to port 80 externally
+  type: LoadBalancer  # This will expose the service externally if you're on a cloud platform like AWS, GCP, etc.

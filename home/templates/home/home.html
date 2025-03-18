@@ -7,6 +7,312 @@
     <title>லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="{% static 'js/script.js' %}" defer></script>
+    <style>
+ /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header Styling */
+header {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    display: flex;
+    justify-content: space-between; /* To align the header title and nav links on either side */
+    align-items: center; /* Vertically center the items in the header */
+    padding: 20px 40px; /* Add some padding to the header */
+}
+
+/* Header Title */
+header h1 {
+    font-size: 2rem;
+    margin: 0; /* Remove any default margin */
+    text-align: justify; /* Justify the title */
+}
+
+/* Navigation Bar Styling */
+nav {
+    margin-top: 0; /* Remove margin from nav if there's unnecessary spacing */
+}
+
+nav ul {
+    display: flex;
+    justify-content: flex-start; /* Align the navigation items to the left */
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px; /* Space between links */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+nav ul li a:hover {
+    color: #f1f1f1; /* Change color on hover */
+}
+
+/* Ensure images cover the full page */
+.home-image-column {
+    width: 100%; /* Full width of the page */
+    height: 125vh; /* Full height of the viewport */
+    overflow: hidden; /* Hide the part of the image that exceeds the viewport */
+    position: relative; /* Position relative to control the child elements */
+}
+
+.home-image-slideshow {
+    display: fit;
+    width: 100%; /* Full width of the page */
+    height: 125vh; /* Full height of the page */
+    transition: transform 1s ease-in-out; /* Smooth transition effect for sliding images */
+}
+
+.home-image-slideshow img {
+    width: 100%; /* Ensure each image covers the full width */
+    height: 100%; /* Ensure each image covers the full height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+/* About Us Section */
+#about_us {
+    display: flex; /* Use Flexbox for side-by-side layout */
+    justify-content: space-between; /* Ensure the columns are spaced evenly */
+    align-items: center; /* Vertically center the content */
+    padding: 50px 20px; /* Add some padding */
+    text-align: justify; /* Justify the text in the section */
+}
+
+/* Left Column: Text content */
+.text-column {
+    width: 50%; /* Take up 50% of the screen width */
+    padding-right: 20px; /* Add space between text and the image column */
+    align-items: left;
+}
+
+.text-column h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.text-column p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+    text-align: justify; /* Justify the text inside the paragraph */
+}
+
+/* Navigation Buttons */
+.nav-buttons {
+    margin-top: 20px;
+}
+
+.nav-buttons button {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-buttons button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Right Column: Image Gallery */
+.aus-image-column {
+    width: 50%; /* Take up the other 50% of the screen width */
+    overflow: hidden; /* Hide images that are outside of the container */
+    align-items: center;
+}
+
+.aus-image-slideshow {
+    display: flex;
+    width: 100%; /* Full width of the column */
+    height: 100%; /* Full height of the column */
+    transition: transform 1s ease-in-out;
+    align-items: right;
+}
+
+.aus-image-slideshow img {
+    width: 100%; /* Ensure images take up full width */
+    height: auto; /* Maintain the aspect ratio */
+    object-fit: cover;
+}
+
+/* Responsive Design for Small Screens */
+@media (max-width: 768px) {
+    #about_us {
+        flex-direction: column; /* Stack the columns vertically on small screens */
+        padding: 20px; /* Adjust padding */
+    }
+
+    .text-column, .aus-image-column {
+        width: 100%; /* Each column takes full width */
+        padding-right: 0; /* Remove padding */
+    }
+
+    .nav-buttons button {
+        width: 100%; /* Make buttons full width on small screens */
+        margin-bottom: 10px; /* Space between buttons */
+    }
+}
+
+/* Events Section */
+#events {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center-align the content */
+    justify-content: center; /* Center the content vertically */
+    text-align: center; /* Center the text */
+    padding: 50px 20px;
+}
+
+#events h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#events p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #555;
+    text-align: justify; /* Justify the text in the paragraph */
+}
+
+/* Table Styling */
+.events-table {
+    width: 80%; /* Adjust the width of the table */
+    border-collapse: collapse; /* Remove space between cells */
+    margin-top: 20px;
+}
+
+.events-table th, .events-table td {
+    padding: 15px;
+    text-align: left; /* Left-align the text inside the cells */
+    border: 1px solid #ddd; /* Add border to table cells */
+}
+
+.events-table th {
+    background-color: #4CAF50; /* Green background for headers */
+    color: white;
+    font-size: 1.2rem;
+}
+
+.events-table td {
+    font-size: 1rem;
+    color: #555;
+}
+
+.events-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row color */
+}
+
+.events-table tr:hover {
+    background-color: #ddd; /* Highlight row on hover */
+}
+
+/* Link Styling */
+.apply-link {
+    text-decoration: none;
+    color: #4CAF50; /* Green color for the link */
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.apply-link:hover {
+    color: #45a049; /* Darker green on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .events-table {
+        width: 100%; /* Make the table take up full width on small screens */
+    }
+}
+
+/* Contact Section */
+#contact {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+#contact h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: space-between; /* Space out the form and map */
+    align-items: flex-start; /* Align both items to the top */
+    gap: 20px; /* Space between form and map */
+    text-align: justify; /* Justify the text in the form and map */
+}
+
+.form-container {
+    flex: 1; /* Make the form container take up available space */
+    max-width: 50%; /* Limit the max width of the form */
+    text-align: left; /* Align the form text to the left */
+}
+
+.form-container input, .form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-container input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.map-container {
+    flex: 1; /* Make the map container take up available space */
+    max-width: 50%; /* Limit the max width of the map */
+}
+
+iframe {
+    width: 100%;
+    height: 300px;
+    border: none; /* Remove the border around the iframe */
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column; /* Stack form and map on top of each other */
+        align-items: center; /* Center-align the items */
+    }
+
+    .form-container, .map-container {
+        max-width: 100%; /* Make both form and map take up full width on smaller screens */
+    }
+}
+
+        </style>
 </head>
 <body>
 
@@ -28,17 +334,17 @@
 
     <!-- Main Content Section -->
     <section id="home">
-        <div class="image-column">
-            <div class="image-slideshow">
-                <img src="{% static 'images/seatlle-tamil-sangam.jpg' %}" alt="Tamil Course Image 1">
-                <img src="{% static 'images/missions/missions.jpg' %}" alt="Tamil Course Image 1">
-                    <img src="{% static 'images/missions/missions-1.jpg' %}" alt="Tamil Course Image 2">
-                    <img src="{% static 'images/missions/missions-2.jpg' %}" alt="Tamil Course Image 3">
-                    <img src="{% static 'images/missions/missions-3.jpg' %}" alt="Tamil Course Image 4">
+        <div class="home-image-column">
+            <div class="home-image-slideshow">
+                <img src="{% static 'images/seatlle-tamil-sangam.jpg' %}" alt="Tamil Course Image 1" style="opacity: 1;">
+                <img src="{% static 'images/missions/missions.jpg' %}" alt="Tamil Course Image 2" style="opacity: 1;">
+                <img src="{% static 'images/missions/missions-1.jpg' %}" alt="Tamil Course Image 3" style="opacity: 0;">
+                <img src="{% static 'images/missions/missions-2.jpg' %}" alt="Tamil Course Image 4" style="opacity: 0;">
+                <img src="{% static 'images/missions/missions-3.jpg' %}" alt="Tamil Course Image 5" style="opacity: 0;">
             </div>
         </div>
     </section>
-
+    
     <section id="about_us">
         <div class="about-us-content">
             <!-- Left Column: Text content with swap functionality -->
@@ -61,8 +367,9 @@
             </div>
 
             <!-- Right Column: Image Gallery with Automatic Image Swapping -->
-            <div class="image-column">
-                <div class="image-slideshow">
+            <div class="aus-image-column">
+                <div class="aus-image-slideshow">
+                    <img src="{% static 'images/seatlle-tamil-sangam.jpg' %}" alt="Tamil Course Image 1">
                     <img src="{% static 'images/missions/missions.jpg' %}" alt="Tamil Course Image 1">
                     <img src="{% static 'images/missions/missions-1.jpg' %}" alt="Tamil Course Image 2">
                     <img src="{% static 'images/missions/missions-2.jpg' %}" alt="Tamil Course Image 3">
@@ -70,19 +377,19 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section><br>
     
     <section id="gen_info">
-        <h2>பொதுவான தகவல்</h2>
-        <p>வகுப்பு பற்றிய பொதுவான தகவல்கள்.</p>
-    </section>
+        <h2 style="text-align: justify;">பொதுவான தகவல்</h2>
+        <p style="text-align: justify;">வகுப்பு பற்றிய பொதுவான தகவல்கள்.</p>
+    </section><br>
 
     <section id="library">
-        <h2>நூலகம்</h2>
-        <p>நம் தமிழ்ப் பள்ளியின் நூலகம் தமிழ் மொழியின் நிபுணத்துவத்தையும் வாசிப்பின் மகிழ்ச்சியையும் ஒருங்கே அனுபவிக்க ஊக்குவிக்கப் பட்டிருக்கிறது. குழந்தைகளுக்கும் பெரியவர்களுக்கும் பொருந்தும் படி பல்வேறு கலந்தாய்வு, கதைபுத்தகங்கள், பாடநூல்கள், அறிவியல், வரலாறு, இலக்கியம் என ஏராளமான தலைப்புகளை உள்ளடக்கியதான 150-க்கும் மேற்பட்ட புத்தகங்கள் இங்கு காத்திருக்கின்றன.</p><br>
-        <p>புத்தகங்கள் ஓர் அறிவின் சாளரம் என்பதை உணர்த்த, எளிதாக திறனாய்வு செய்யவும் கற்றல் மற்றும் கருத்துப்பரிமாற்றத்திற்கும் ஏற்ற முறையில் நாம் இந்த நூலகத்தை வடிவமைத்துள்ளோம். மாணவர்கள் மட்டுமின்றி பெற்றோர்களும் தேவைக்கேற்ற புத்தகங்களை தேர்ந்தெடுத்து வாசிப்பதன் மூலம் தமிழ் மொழியை மேலும் வலுப்படுத்திக் கொள்ளலாம். புதிதாக அறிமுகமான சிறுவர் கதைகள் முதல் தமிழின் பெருந்தகை ஆளுமைகள் குறித்து விவரிக்கும் ஆய்வுப் புத்தகங்கள் வரை இந்த நூலகம் ஒரு முழுமையான வாசிப்பின்பத்தைத் தரும் அறக்கட்டளையாக இருக்கும்.</p><br>
-        <p>கல்வி, கலாசாரம், நுண்ணறிவு என அனைத்துக்கும் வாசிப்பு முக்கியம் என்பதைக் கருத்தில் கொண்டு, அனைவரும் இந்த நூலக அறவாசிப்பினை முழுமையாகப் பயனடைவோம். வாருங்கள், தங்கள் இலக்கியப் பயணத்தை லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி நூலகத்தில் இனிதே தொடங்குங்கள்!</p><br>
-    </section>
+        <h2 style="text-align: justify;">நூலகம்</h2>
+        <p style="text-align: justify;">நம் தமிழ்ப் பள்ளியின் நூலகம் தமிழ் மொழியின் நிபுணத்துவத்தையும் வாசிப்பின் மகிழ்ச்சியையும் ஒருங்கே அனுபவிக்க ஊக்குவிக்கப் பட்டிருக்கிறது. குழந்தைகளுக்கும் பெரியவர்களுக்கும் பொருந்தும் படி பல்வேறு கலந்தாய்வு, கதைபுத்தகங்கள், பாடநூல்கள், அறிவியல், வரலாறு, இலக்கியம் என ஏராளமான தலைப்புகளை உள்ளடக்கியதான 150-க்கும் மேற்பட்ட புத்தகங்கள் இங்கு காத்திருக்கின்றன.</p><br>
+        <p style="text-align: justify;">புத்தகங்கள் ஓர் அறிவின் சாளரம் என்பதை உணர்த்த, எளிதாக திறனாய்வு செய்யவும் கற்றல் மற்றும் கருத்துப்பரிமாற்றத்திற்கும் ஏற்ற முறையில் நாம் இந்த நூலகத்தை வடிவமைத்துள்ளோம். மாணவர்கள் மட்டுமின்றி பெற்றோர்களும் தேவைக்கேற்ற புத்தகங்களை தேர்ந்தெடுத்து வாசிப்பதன் மூலம் தமிழ் மொழியை மேலும் வலுப்படுத்திக் கொள்ளலாம். புதிதாக அறிமுகமான சிறுவர் கதைகள் முதல் தமிழின் பெருந்தகை ஆளுமைகள் குறித்து விவரிக்கும் ஆய்வுப் புத்தகங்கள் வரை இந்த நூலகம் ஒரு முழுமையான வாசிப்பின்பத்தைத் தரும் அறக்கட்டளையாக இருக்கும்.</p><br>
+        <p style="text-align: justify;">கல்வி, கலாசாரம், நுண்ணறிவு என அனைத்துக்கும் வாசிப்பு முக்கியம் என்பதைக் கருத்தில் கொண்டு, அனைவரும் இந்த நூலக அறவாசிப்பினை முழுமையாகப் பயனடைவோம். வாருங்கள், தங்கள் இலக்கியப் பயணத்தை லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி நூலகத்தில் இனிதே தொடங்குங்கள்!</p><br>
+    </section><br>
 
     <section id="events">
         <h2>நிகழ்ச்சிகள்</h2>
@@ -118,7 +425,8 @@
                 </tr>
             </tbody>
         </table>
-    </section>
+    </section><br>
+    
     
     <section id="contact">
         <h2>Contact Us</h2>
@@ -132,7 +440,7 @@
                 </form>
             </div>
             <div class="map-container">
-                <iframe width="100%" height="300px" src="https://www.google.com/maps/embed/v1/place?q=Salem,Tamil Nadu,India&key=YOUR_API_KEY"></iframe>
+                <iframe width="100%" height="300px" src="https://www.openstreetmap.org/export/embed.html?bbox=78.00,11.75,78.12,11.85&amp;layer=mapnik&amp;marker=11.80,78.06" style="border: 1px solid black"></iframe>
             </div>
         </div>
     </section>
@@ -141,6 +449,31 @@
     <footer>
         <p>&copy; 2025 Tamil Class Web Page. All rights reserved.</p>
     </footer>
+    <!-- Add this script at the end of your body -->
+<script>
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.slideshow-image');
+    const totalImages = images.length;
+
+    function showNextImage() {
+        // Set all images' opacity to 0
+        images.forEach((img) => {
+            img.style.opacity = 0;
+        });
+
+        // Increment the index to show the next image
+        currentIndex = (currentIndex + 1) % totalImages;
+
+        // Set the opacity of the current image to 1 (visible)
+        images[currentIndex].style.opacity = 1;
+    }
+
+    // Show next image every 5 seconds
+    setInterval(showNextImage, 5000);
+
+    // Initially show the first image
+    showNextImage();
+</script>
 
 </body>
 </html>

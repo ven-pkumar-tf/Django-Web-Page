@@ -122,11 +122,11 @@ USE_TZ = True
 
 
 # Define where static files should be collected for deployment
-#STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Ensure the directory exists in case of manual testing
 import os
-#os.makedirs(STATIC_ROOT, exist_ok=True)
+os.makedirs(STATIC_ROOT, exist_ok=True)
 
 # URL for serving static files (used in your templates)
 STATIC_URL = '/static/'
