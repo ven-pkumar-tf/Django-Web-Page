@@ -18,10 +18,18 @@ jobs:
           versionSpec: '3.x'
           addToPath: true
           architecture: 'x64'
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'aks-service-connection'
+          scriptType: 'batch'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'az acr login --name tamilwebappacr'
       - task: Docker@2
         inputs:
-          containerRegistry: 'aks-cluster-server'
+          azureSubscription: 'aks-service-connection'
+          containerRegistry: 'tamilwebappacr'
+          repository: 'tamilwebappacr.azurecr.io/tamilapp'
           command: 'buildAndPush'
           Dockerfile: '**/Dockerfile'
           tags: 'latest'
-      
+    
