@@ -38,6 +38,6 @@ spec:
     app: django-app
   ports:
     - protocol: TCP
-      port: 80
+      port: 8000
       targetPort: 8000  # Expose port 8000 from the container to port 80 externally
   type: LoadBalancer  # This will expose the service externally if you're on a cloud platform like AWS, GCP, etc.
