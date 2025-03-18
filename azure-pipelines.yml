@@ -57,7 +57,7 @@ jobs:
           azureSubscription: 'aks-service-connection'
           appType: 'webAppLinux'
           WebAppName: 'tamil-web-page-service'
-          packageForLinux: '$(System.DefaultWorkingDirectory)/**/django_app.zip'
+          packageForLinux: '/home/vsts/work/1/a/drop/django_app.zip'
           RuntimeStack: 'PYTHON:3.12'
           StartupCommand: 'gunicorn tamil_class_web_page.wsgi:application --bind 0.0.0.0:8000'
           DeploymentTypeLinux: 'oneDeploy'
