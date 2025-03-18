@@ -19,13 +19,18 @@ spec:
         image: tamilwebappacr.azurecr.io/ven-pkumar-tf/django-web-page:latest
         ports:
           - containerPort: 8000
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "1Gi"
-            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /health/
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health/
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
 
 ---
 apiVersion: v1
