@@ -5,7 +5,7 @@ metadata:
   labels:
     app: django-app
 spec:
-  replicas: 1  # Adjust as needed for scaling
+  replicas: 2  # Adjust for scaling
   selector:
     matchLabels:
       app: django-app
@@ -16,18 +16,21 @@ spec:
     spec:
       containers:
         - name: django-container
-          image: tamilwebappacr.azurecr.io/ven-pkumar-tf/django-web-page:latest  # Ensure this matches your registry
+          image: tamilwebappacr.azurecr.io/ven-pkumar-tf/django-web-page:latest
           ports:
-            - containerPort: 8000  # Django default port
+            - containerPort: 8000
           env:
             - name: DJANGO_SETTINGS_MODULE
-              value: "tamil_class_web_page.settings"  # Adjust based on project settings
+              value: "tamil_class_web_page.settings"
+            - name: DATABASE_URL
+              value: "postgres://user:password@database-host:5432/dbname"
           volumeMounts:
             - name: static-volume
-              mountPath: /app/static  # Mount for static files
+              mountPath: /app/static
       volumes:
         - name: static-volume
-          emptyDir: {}  # Temporary volume; replace with persistent storage if needed
+          emptyDir: {}
+
 ---
 apiVersion: v1
 kind: Service
@@ -40,5 +43,4 @@ spec:
     - protocol: TCP
       port: 8000
       targetPort: 8000
-      nodePort: 30007  # Choose an available port
-  type: NodePort
+  type: LoadBalancer  # Change to ClusterIP if needed
