@@ -14,20 +14,18 @@ spec:
       labels:
         app: django-app
     spec:
-      containers:
-        - name: django-container
-          image: tamilwebappacr.azurecr.io/ven-pkumar-tf/django-web-page:latest  # Replace with your correct image
-          ports:
-            - containerPort: 8000  # Django default port
-          env:
-            - name: DJANGO_SETTINGS_MODULE
-              value: "tamil_class_web_page.settings"  # Replace with your settings module
-          volumeMounts:
-            - name: static-volume
-              mountPath: /app/static  # Mount path for static files
-      volumes:
-        - name: static-volume
-          emptyDir: {}  # Temporary storage; you might want persistent storage like PVC in production
+     containers:
+      - name: django-container
+        image: tamilwebappacr.azurecr.io/ven-pkumar-tf/django-web-page:latest
+        ports:
+          - containerPort: 8000
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
 
 ---
 apiVersion: v1
