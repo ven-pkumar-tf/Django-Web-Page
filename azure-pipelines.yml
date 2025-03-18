@@ -26,6 +26,7 @@ jobs:
             python manage.py test
         displayName: "Run Django Tests"
         continueOnError: true  # Optional: continue if tests fail
+ 
       - task: ArchiveFiles@2
         inputs:
           rootFolderOrFile: '$(Build.SourcesDirectory)/Main_Project'
@@ -59,5 +60,5 @@ jobs:
           WebAppName: 'tamil-web-page-service'
           packageForLinux: '/home/vsts/work/1/a/drop/django_app.zip'
           RuntimeStack: 'PYTHON:3.12'
-          StartupCommand: 'gunicorn tamil_class_web_page.wsgi:application --bind 0.0.0.0:8000'
+          StartupCommand: 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
           DeploymentTypeLinux: 'oneDeploy'
