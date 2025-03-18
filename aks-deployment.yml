@@ -5,7 +5,7 @@ metadata:
   labels:
     app: django-app
 spec:
-  replicas: 1  # Adjust based on your needs for scaling
+  replicas: 1  # Adjust as needed for scaling
   selector:
     matchLabels:
       app: django-app
@@ -14,24 +14,20 @@ spec:
       labels:
         app: django-app
     spec:
-     containers:
-      - name: django-container
-        image: tamilwebappacr.azurecr.io/ven-pkumar-tf/django-web-page:latest
-        ports:
-          - containerPort: 8000
-        readinessProbe:
-          httpGet:
-            path: /health/
-            port: 8000
-          initialDelaySeconds: 5
-          periodSeconds: 5
-        livenessProbe:
-          httpGet:
-            path: /health/
-            port: 8000
-          initialDelaySeconds: 10
-          periodSeconds: 5
-
+      containers:
+        - name: django-container
+          image: tamilwebappacr.azurecr.io/ven-pkumar-tf/django-web-page:latest  # Ensure this matches your registry
+          ports:
+            - containerPort: 8000  # Django default port
+          env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: "tamil_class_web_page.settings"  # Adjust based on project settings
+          volumeMounts:
+            - name: static-volume
+              mountPath: /app/static  # Mount for static files
+      volumes:
+        - name: static-volume
+          emptyDir: {}  # Temporary volume; replace with persistent storage if needed
 ---
 apiVersion: v1
 kind: Service
@@ -42,7 +38,6 @@ spec:
     app: django-app
   ports:
     - protocol: TCP
-      port: 8000      # The port exposed by the service
-      targetPort: 8000  # The port the container listens on
-  type: LoadBalancer   # Expose service externally (requires cloud provider or use NodePort for local setups)
-
+      port: 8000
+      targetPort: 8000  # Expose container port externally
+  type: LoadBalancer  # Change to ClusterIP if not exposing externally
