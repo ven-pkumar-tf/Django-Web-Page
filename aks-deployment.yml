@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
         - name: django-container
-          image: my-django-app:latest  # Replace with the image you built or pushed to a registry
+          image: tamilwebappacr.azurecr.io/ven-pkumar-tf/django-web-page:latest  # Replace with the image you built or pushed to a registry
           ports:
             - containerPort: 8000  # Django runs on port 8000 by default
           env:
             - name: DJANGO_SETTINGS_MODULE
-              value: "your_project_name.settings"  # Replace with your project's settings module
+              value: "tamil_class_web_page.settings"  # Replace with your project's settings module
           volumeMounts:
             - name: static-volume
               mountPath: /app/static  # If you have a static directory for Django
