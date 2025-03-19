@@ -78,8 +78,16 @@ WSGI_APPLICATION = 'tamil_class_web_page.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'sql_server.pyodbc',  # The backend engine for SQL Server
+        'NAME': 'sqldb-tamil-class-01',   # Replace with your Azure SQL Database name
+        'USER': 'tamilclass-admin',        # Replace with your Azure SQL Database username
+        'PASSWORD': 'NewPassword@1234',    # Replace with your Azure SQL Database password
+        'HOST': 'sql-tamil-class-01.database.windows.net',  # Replace with your Azure server name
+        'PORT': '',  # Default port 1433 is used by SQL Server
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',  # Make sure this driver is installed
+            'extra_params': 'TrustServerCertificate=yes;',  # Optional SSL setting
+        },
     }
 }
 
@@ -110,7 +118,7 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_TZ = True
 

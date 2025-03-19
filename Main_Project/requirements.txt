@@ -1,1 +1,4 @@
 django
+pyodbc
+django-pyodbc-azure
+setuptools

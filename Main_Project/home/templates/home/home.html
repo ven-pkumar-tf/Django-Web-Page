@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/script.js' %}" defer></script>
     <style>
  /* General Reset */
 * {
@@ -58,113 +56,110 @@ nav ul li a {
 nav ul li a:hover {
     color: #f1f1f1; /* Change color on hover */
 }
-
-/* Ensure images cover the full page */
-.home-image-column {
-    width: 100%; /* Full width of the page */
-    height: 125vh; /* Full height of the viewport */
-    overflow: hidden; /* Hide the part of the image that exceeds the viewport */
-    position: relative; /* Position relative to control the child elements */
+/* Main Content Section */
+#home {
+    padding: 50px 20px;
 }
 
+/* Image Column */
+.home-image-column {
+    position: relative;
+    max-width: 100%; /* Ensures full width */
+    overflow: hidden; /* Hide overflow to avoid extra content outside the container */
+}
+
+/* Slideshow container */
 .home-image-slideshow {
-    display: fit;
-    width: 100%; /* Full width of the page */
-    height: 125vh; /* Full height of the page */
-    transition: transform 1s ease-in-out; /* Smooth transition effect for sliding images */
+    display: flex;
+    transition: transform 0.5s ease-in-out; /* Smooth transition for sliding images */
 }
 
 .home-image-slideshow img {
-    width: 100%; /* Ensure each image covers the full width */
-    height: 100%; /* Ensure each image covers the full height */
-    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    width: 100%;
+    max-width: 100%; /* Ensure images take up full container width */
+    height: auto;
 }
 
-/* About Us Section */
-#about_us {
-    display: flex; /* Use Flexbox for side-by-side layout */
-    justify-content: space-between; /* Ensure the columns are spaced evenly */
-    align-items: center; /* Vertically center the content */
-    padding: 50px 20px; /* Add some padding */
-    text-align: justify; /* Justify the text in the section */
+/* Responsive Design */
+@media (max-width: 768px) {
+    .home-image-slideshow img {
+        width: 100%; /* Ensure images are responsive */
+    }
 }
 
-/* Left Column: Text content */
-.text-column {
-    width: 50%; /* Take up 50% of the screen width */
-    padding-right: 20px; /* Add space between text and the image column */
-    align-items: left;
+/* General container setup */
+.about-us {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Align items center */
+    text-align: center;
+    padding: 40px 20px; /* Add padding for spacing */
 }
 
-.text-column h3 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: #333;
+/* Style for About Us Text Section */
+.about-text {
+    max-width: 800px;
+    margin-bottom: 40px;
 }
 
-.text-column p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #555;
-    text-align: justify; /* Justify the text inside the paragraph */
+/* The container for Tamil and English content */
+#content1, #content2 {
+    display: none; /* Hide content by default */
 }
 
-/* Navigation Buttons */
-.nav-buttons {
-    margin-top: 20px;
+#content1.active, #content2.active {
+    display: block; /* Only display the active content */
 }
 
-.nav-buttons button {
-    background-color: #4CAF50; /* Green background */
+/* About Us Image Gallery Styles */
+.about-image-gallery {
+    display: flex;
+    justify-content: center; /* Center the images horizontally */
+    overflow: hidden; /* Hide overflow for sliding images */
+    width: 100%; /* Set width to ensure proper display */
+    max-width: 800px; /* Optional: set a max width for the gallery */
+    position: relative;
+}
+
+.about-image-gallery img {
+    width: 100%;
+    height: auto;
+    flex-shrink: 0; /* Prevent images from shrinking */
+    transition: transform 1s ease; /* Smooth transition for sliding effect */
+}
+
+/* Buttons styling (Previous and Next) */
+button {
+    background-color: #007bff;
     color: white;
     border: none;
     padding: 10px 20px;
-    font-size: 1rem;
+    font-size: 16px;
     cursor: pointer;
-    margin: 5px;
+    margin-top: 20px;
+    border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
-.nav-buttons button:hover {
-    background-color: #45a049; /* Darker green on hover */
+button:hover {
+    background-color: #0056b3;
 }
 
-/* Right Column: Image Gallery */
-.aus-image-column {
-    width: 50%; /* Take up the other 50% of the screen width */
-    overflow: hidden; /* Hide images that are outside of the container */
-    align-items: center;
+/* For better image gallery transition (smooth sliding effect) */
+.about-image-gallery {
+    position: relative;
 }
 
-.aus-image-slideshow {
-    display: flex;
-    width: 100%; /* Full width of the column */
-    height: 100%; /* Full height of the column */
-    transition: transform 1s ease-in-out;
-    align-items: right;
+.about-image-gallery img {
+    width: 100%;
+    height: auto;
 }
 
-.aus-image-slideshow img {
-    width: 100%; /* Ensure images take up full width */
-    height: auto; /* Maintain the aspect ratio */
-    object-fit: cover;
-}
-
-/* Responsive Design for Small Screens */
+/* Optional: Make the content scrollable on small screens */
 @media (max-width: 768px) {
-    #about_us {
-        flex-direction: column; /* Stack the columns vertically on small screens */
-        padding: 20px; /* Adjust padding */
-    }
-
-    .text-column, .aus-image-column {
-        width: 100%; /* Each column takes full width */
-        padding-right: 0; /* Remove padding */
-    }
-
-    .nav-buttons button {
-        width: 100%; /* Make buttons full width on small screens */
-        margin-bottom: 10px; /* Space between buttons */
+    .about-image-gallery {
+        width: 100%;
+        max-width: none;
     }
 }
 
@@ -318,8 +313,13 @@ iframe {
 
     <!-- Header Section -->
     <header>
-        <h1>லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி</h1>
-        <!-- Navigation Bar -->
+        <h1 onclick="toggleLoginSignup()">லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி</h1>
+    
+        <div id="login-signup">
+            <button onclick="location.href='/signup'">Sign Up</button>
+            <button onclick="location.href='/login'">Log In</button>
+        </div>
+            <!-- Navigation Bar -->
         <nav>
             <ul>
                 <li><a href="#home">முகப்பு</a></li>
@@ -336,11 +336,11 @@ iframe {
     <section id="home">
         <div class="home-image-column">
             <div class="home-image-slideshow">
-                <img src="{% static 'images/seatlle-tamil-sangam.jpg' %}" alt="Tamil Course Image 1" style="opacity: 1;">
-                <img src="{% static 'images/missions/missions.jpg' %}" alt="Tamil Course Image 2" style="opacity: 1;">
-                <img src="{% static 'images/missions/missions-1.jpg' %}" alt="Tamil Course Image 3" style="opacity: 0;">
-                <img src="{% static 'images/missions/missions-2.jpg' %}" alt="Tamil Course Image 4" style="opacity: 0;">
-                <img src="{% static 'images/missions/missions-3.jpg' %}" alt="Tamil Course Image 5" style="opacity: 0;">
+                <img src="{% static 'images/seatlle-tamil-sangam.jpg' %}" alt="Tamil Course Image 1">
+                <img src="{% static 'images/missions/missions.jpg' %}" alt="Tamil Course Image 2">
+                <img src="{% static 'images/missions/missions-1.jpg' %}" alt="Tamil Course Image 3">
+                <img src="{% static 'images/missions/missions-2.jpg' %}" alt="Tamil Course Image 4">
+                <img src="{% static 'images/missions/missions-3.jpg' %}" alt="Tamil Course Image 5">
             </div>
         </div>
     </section>
@@ -433,9 +433,11 @@ iframe {
         <div class="contact-container">
             <div class="form-container">
                 <form action="mailto:kumarmarimuthu99@gmail.com" method="POST" enctype="text/plain">
+                    {% csrf_token %}
                     <input type="text" id="name" placeholder="Name" name="name" required><br><br>
                     <input type="email" id="email" name="email" placeholder="Mail ID" required><br><br>
                     <textarea id="message" name="message" placeholder="Your Message" required></textarea><br><br>
+                    {{ form.as_p }} 
                     <input type="submit" value="Submit">
                 </form>
             </div>
@@ -450,30 +452,92 @@ iframe {
         <p>&copy; 2025 Tamil Class Web Page. All rights reserved.</p>
     </footer>
     <!-- Add this script at the end of your body -->
-<script>
-    let currentIndex = 0;
-    const images = document.querySelectorAll('.slideshow-image');
-    const totalImages = images.length;
+    <script>
+        // Function to toggle the visibility of content (Tamil and English sections)
+        function toggleContent(currentContent, nextContent) {
+            currentContent.classList.remove('active');
+            nextContent.classList.add('active');
+        }
 
-    function showNextImage() {
-        // Set all images' opacity to 0
-        images.forEach((img) => {
-            img.style.opacity = 0;
+        // Get content elements for Tamil and English text sections
+        const content1 = document.getElementById('content1'); // Tamil Content
+        const content2 = document.getElementById('content2'); // English Content
+
+        // Initially show the Tamil content (content1)
+        content1.classList.add('active');
+
+        // Add event listeners to the "Previous" and "Next" buttons for the "About Us" section
+        document.getElementById('prevButton').addEventListener('click', function() {
+            // When "Previous" is clicked, show Tamil content and hide English content
+            toggleContent(content2, content1); // Show Tamil content (content1), hide English content (content2)
         });
 
-        // Increment the index to show the next image
-        currentIndex = (currentIndex + 1) % totalImages;
+        document.getElementById('nextButton').addEventListener('click', function() {
+            // When "Next" is clicked, show English content and hide Tamil content
+            toggleContent(content1, content2); // Show English content (content2), hide Tamil content (content1)
+        });
 
-        // Set the opacity of the current image to 1 (visible)
-        images[currentIndex].style.opacity = 1;
-    }
+        // ---------------------------- About Us Image Gallery ----------------------------
 
-    // Show next image every 5 seconds
-    setInterval(showNextImage, 5000);
+        // Get the images for the "About Us" gallery
+        const aboutImages = document.querySelectorAll('.about-image-gallery img');
+        const aboutSlideshow = document.querySelector('.about-image-gallery'); // The container for About Us images
+        let aboutIndex = 0; // The index of the currently displayed image in About Us gallery
 
-    // Initially show the first image
-    showNextImage();
-</script>
+        // Function to show the image at the current index in the About Us gallery
+        function showAboutImage(index) {
+            // Loop the images: if the index exceeds the length, reset to the first image
+            if (index >= aboutImages.length) {
+                aboutIndex = 0; // Reset to the first image
+            } else if (index < 0) {
+                aboutIndex = aboutImages.length - 1; // Go to the last image if the index is negative
+            }
 
+            // Adjust the transform property to slide the images in the About Us gallery
+            aboutSlideshow.style.transform = `translateX(-${aboutIndex * 100}%)`;
+        }
+
+        // Auto-change About Us images every 3 seconds (3000ms)
+        setInterval(function() {
+            aboutIndex++; // Increment the current index
+            showAboutImage(aboutIndex); // Update the About Us slideshow to show the next image
+        }, 3000); // Change image every 3 seconds
+
+        // ---------------------------- Home Image Slideshow ----------------------------
+
+        // Get the images for the Home slideshow
+        const homeImages = document.querySelectorAll('.home-image-slideshow img');
+        const homeSlideshow = document.querySelector('.home-image-slideshow'); // The container for Home images
+        let homeIndex = 0; // The index of the currently displayed image in Home slideshow
+
+        // Function to show the image at the current index in the Home slideshow
+        function showHomeImage(index) {
+            // Loop the images: if the index exceeds the length, reset to the first image
+            if (index >= homeImages.length) {
+                homeIndex = 0; // Reset to the first image
+            } else if (index < 0) {
+                homeIndex = homeImages.length - 1; // Go to the last image if the index is negative
+            }
+
+            // Adjust the transform property to slide the images in the Home slideshow
+            homeSlideshow.style.transform = `translateX(-${homeIndex * 100}%)`;
+        }
+
+        // Auto-change Home images every 3 seconds (3000ms)
+        setInterval(function() {
+            homeIndex++; // Increment the current index
+            showHomeImage(homeIndex); // Update the Home slideshow to show the next image
+        }, 3000); // Change image every 3 seconds
+        function toggleLoginSignup() {
+            const loginSignupDiv = document.getElementById('login-signup');
+            // Toggle the display of the login/signup buttons
+            if (loginSignupDiv.style.display === "none" || loginSignupDiv.style.display === "") {
+                loginSignupDiv.style.display = "block";
+            } else {
+                loginSignupDiv.style.display = "none";
+            }
+        }
+    </script>
+    
 </body>
 </html>
