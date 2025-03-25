@@ -82,9 +82,17 @@ WSGI_APPLICATION = 'tamil_web_page.wsgi.application'
 # Database settings
 # Use dj_database_url to parse DATABASE_URL environment variable for production
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', 'mssql://tamilclass-admin:NewPassword@1234@sql-tamil-class-01.database.windows.net:1433/tamil_class_db')
-    )
+    'default': {
+        'ENGINE': 'mssql',
+        'NAME': 'tamil_class_db',
+        'USER': 'tamilclass-admin',
+        'PASSWORD': 'NewPassword@1234',
+        'HOST': 'sql-tamil-class-01.database.windows.net',
+        'PORT': '1433',  # default port
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
+    }
 }
 
 # settings.py for custom user model
