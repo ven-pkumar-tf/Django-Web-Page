@@ -3,3 +3,7 @@ mssql-django
 django-mssql-backend
 pyodbc
 Pillow
+django-cors-headers
+dj-database-url
+whitenoise
+psycopg2
