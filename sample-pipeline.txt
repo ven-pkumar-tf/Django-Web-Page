@@ -4,6 +4,7 @@
 
 name: Build and deploy Python app to Azure Web App - tamil-web-page-service
 
+
 on:
   push:
     branches:
