@@ -15,7 +15,7 @@ steps:
   inputs:
     scriptSource: 'inline'
     script: |
-      cd tamil_web_page
+      cd $(Build.SourcesDirectory)/tamil_web_page
       python -m venv myvenv
       source myvenv/bin/activate
       python -m pip install --upgrade pip
