@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        /* CSS Styles for Profile Page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .profile-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        .profile-info p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .profile-info .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .profile-info .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .form-container {
+            margin-top: 30px;
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-container input[type="file"],
+        .form-container input[type="text"],
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        .password-change-form {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+        }
+
+        .password-change-form h2 {
+            margin-bottom: 20px;
+        }
+
+        .password-change-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .password-change-form button {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .password-change-form button:hover {
+            background-color: #c82333;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <!-- Profile Header Section -->
+        <div class="profile-header">
+            <h1>Welcome, {{ user.username }}!</h1>
+        </div>
+        
+        <!-- Profile Details Section -->
+        <div class="profile-details">
+            <div class="profile-image">
+                <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture">
+            </div>
+            
+            <div class="profile-info">
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Bio:</strong> {{ user.profile.bio }}</p>
+                <a href="#edit-profile" class="btn">Edit Profile</a>
+                <a href="#change-password" class="btn">Change Password</a>
+            </div>
+        </div>
+        
+        <!-- Edit Profile Form -->
+        <div class="form-container" id="edit-profile" style="display:none;">
+            <h2>Edit Profile</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Update Profile">
+            </form>
+        </div>
+
+        <!-- Change Password Form -->
+        <div class="password-change-form" id="change-password" style="display:none;">
+            <h2>Change Password</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ password_form.as_p }}
+                <button type="submit">Change Password</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to toggle between the profile edit and change password forms
+        document.querySelector('.profile-info .btn:nth-child(1)').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('edit-profile').style.display = 'block';
+            document.getElementById('change-password').style.display = 'none';
+        });
+
+        document.querySelector('.profile-info .btn:nth-child(2)').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('change-password').style.display = 'block';
+            document.getElementById('edit-profile').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

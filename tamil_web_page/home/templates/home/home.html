@@ -1,0 +1,666 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700&display=swap" rel="stylesheet">
+    <title>லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி</title>
+    <style>
+        .tamil-text {
+            font-family: 'Noto Sans Tamil', sans-serif;
+        }
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+        /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header Section */
+.header-content {
+    display: flex; /* Enables flexbox */
+    justify-content: space-between; /* Aligns <h1> to the left and login/signup to the right */
+    align-items: center; /* Vertically centers the items */
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+}
+
+h1.tamil-text {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 2em;
+}
+
+#login-signup {
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #007bff;
+    border-radius: 5px;
+    color: white;
+    margin-left: 20px;
+}
+
+.profile-icon img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.profile-icon span {
+    font-size: 1.2em;
+}
+
+.profile-details {
+    display: none;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.auth-buttons .btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.auth-buttons .btn:hover {
+    background-color: #218838;
+}
+
+
+/* Navigation Bar Styling */
+nav {
+    background-color: #444;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Login/Signup buttons (for unauthenticated users) */
+#login-signup button {
+    margin-left: 10px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#login-signup button:hover {
+    background-color: #0056b3;
+}
+
+/* Main Content Section */
+#home {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Image Column */
+.home-image-column {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Ensures only one image is shown */
+}
+
+/* Slideshow container */
+.home-image-slideshow {
+    display: flex;
+    width: 100%; /* Will stretch to fit children */
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Each image */
+.home-image-slideshow img {
+    flex: 0 0 100vw; /* Force each image to occupy exactly 100vw */
+    height: 100vh;
+    object-fit: cover;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .home-image-slideshow img {
+        height: 100vh;
+    }
+}
+
+    #about_us {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.about-us-content {
+    display: flex;
+    width: 100%;
+}
+
+.text-column {
+    width: 50%;
+    padding-right: 20px;
+}
+
+/* Image Slideshow Styles */
+.aus-image-column {
+    position: relative;
+    width: 45%;
+    overflow: hidden;
+}
+
+.aus-image-slideshow {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.aus-image-slideshow img {
+    width: 100%;
+    height: auto;
+    flex-shrink: 0;
+    object-fit: cover;
+    transition: opacity 1s ease-in-out;
+}
+
+.aus-image-slideshow img.hidden {
+    opacity: 0;
+}
+
+.text-content {
+    display: none;
+}
+
+.text-content.active {
+    display: block;
+}
+
+.nav-buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+    /* Events Section */
+    #events {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.gen_info, .library_info {
+    padding-left: 20px; /* Adds padding on the left side of these sections */
+    padding-right: 20px; /* Adds padding on the right side of these sections */
+}
+
+
+
+#events h2 {
+    color: #2c3e50;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#events p {
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.events-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.events-table th, .events-table td {
+    border: 1px solid #ddd;
+    padding: 12px 16px;
+    text-align: left;
+}
+
+.events-table th {
+    background-color: #3498db;
+    color: white;
+}
+
+.events-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.events-table tr:hover {
+    background-color: #eaf2f8;
+}
+
+    /* Contact Section */
+    #contact {
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    #contact h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .contact-container {
+        display: flex;
+        justify-content: space-between; /* Space out the form and map */
+        align-items: flex-start; /* Align both items to the top */
+        gap: 20px; /* Space between form and map */
+        text-align: justify; /* Justify the text in the form and map */
+    }
+
+    .form-container {
+        flex: 1; /* Make the form container take up available space */
+        max-width: 50%; /* Limit the max width of the form */
+        text-align: left; /* Align the form text to the left */
+    }
+
+    .form-container input, .form-container textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .form-container input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .form-container input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .map-container {
+        flex: 1; /* Make the map container take up available space */
+        max-width: 50%; /* Limit the max width of the map */
+    }
+
+    iframe {
+        width: 100%;
+        height: 300px;
+        border: none; /* Remove the border around the iframe */
+    }
+
+    /* Responsive Design for Smaller Screens */
+    @media (max-width: 768px) {
+        .contact-container {
+            flex-direction: column; /* Stack form and map on top of each other */
+            align-items: center; /* Center-align the items */
+        }
+
+        .form-container, .map-container {
+            max-width: 100%; /* Make both form and map take up full width on smaller screens */
+        }
+}
+  /* Styles for hiding the buttons initially */
+  #login-signup-buttons {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Styling for the heading */
+        h1 {
+            cursor: pointer;
+            color: white;
+        }
+
+        h1:hover {
+            text-decoration: underline;
+        }
+
+        </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="header-content">
+            <h1 class="tamil-text" style="align-items: start;">லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி</h1>
+
+            <!-- Profile Section -->
+            <div id="login-signup">
+                {% if user.is_authenticated %}
+                    <div class="profile-icon" onclick="toggleProfile()">
+                        <img src="{{ user.profile.profile_picture.url }}" alt="Profile" class="profile-img">
+                        <span>{{ user.username }}</span>
+                    </div>
+                    <div id="profile-details" class="profile-details">
+                        <p><strong>Username:</strong> {{ user.username }}</p>
+                        <p><strong>Bio:</strong> {{ user.profile.role }}</p>
+                    </div>
+                    {% else %}
+                    <!-- Show Login and Signup Buttons when User is Not Authenticated -->
+                    <div class="auth-buttons">
+                        <a href="{% url 'login' %}" class="btn">Login</a>
+                        <a href="{% url 'signup' %}" class="btn">Sign Up</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>    <!-- Navigation Bar -->
+        <nav>
+            <ul>
+                <li><a href="#home" class="tamil-text">முகப்பு</a></li>
+                <li><a href="#about_us" class="tamil-text">எங்களைப் பற்றி</a></li>
+                <li><a href="#gen_info" class="tamil-text">பொதுவான தகவல்</a></li>
+                <li><a href="#library" class="tamil-text">நூலகம்</a></li>
+                <li><a href="#events" class="tamil-text">நிகழ்ச்சிகள்</a></li>
+                <li><a href="#contact" class="tamil-text">தொடர்பு கொள்ளவும்</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <section id="home">
+        <div class="home-image-column">
+            <div class="home-image-slideshow">
+                <img src="{% static 'images/seatlle-tamil-sangam.jpg' %}" alt="Tamil Course Image 1">
+                <img src="{% static 'images/missions/missions.jpg' %}" alt="Tamil Course Image 2">
+                <img src="{% static 'images/missions/missions-1.jpg' %}" alt="Tamil Course Image 3">
+                <img src="{% static 'images/missions/missions-2.jpg' %}" alt="Tamil Course Image 4">
+                <img src="{% static 'images/missions/missions-3.jpg' %}" alt="Tamil Course Image 5">
+            </div>
+        </div>
+    </section>
+    
+    <section id="about_us">
+        <div class="about-us-content">
+            <!-- Left Column: Text content with swap functionality -->
+            <div class="text-column">
+                <div class="text-content" id="content1">
+                    <h3 class="tamil-text">நோக்கம்</h3><br><br>
+                    <p align="justify" class="tamil-text">தமிழ்மொழி இலக்கண, இலக்கிய, வரலாற்று அடிப்படை கொண்ட மிகப் பழமையானதொரு இந்திய மொழி. புலம்பெயர்ந்து வாழும் குழந்தைகளுக்கும், இளைஞர்களுக்கும் தமிழ் மொழி கற்றுத் தருவதே சியாட்டில் தமிழ் பள்ளியின் முக்கிய நோக்கமாகும். தமிழ் கற்பிப்பது மட்டுமல்லாமல், இசை, நடனம், நாடகம், போன்ற தமிழர் பண்பாட்டை ஒட்டிய நிகழ்ச்சிகளுக்கும் ஆதரவு தந்து தமிழையும், தமிழ் பண்பாட்டையும் போற்றுவது இப்பள்ளியின் விருப்பமாகும்.</p>
+                </div>
+
+                <div class="text-content" id="content2">
+                    <h3>Mission</h3><br><br>
+                    <p align="justify">Tamil language is an ancient Indian Language with a long history and rich literature and comprehensive grammar. The main objective of Lake stevens STS Tamil School is to teach Tamil language to the Diaspora Children and Youth. In addition to teaching Tamil, ITA encourages Cultural activities such as music, dance, drama and any art form based on Tamil language and Tamil culture to promote Tamil and Tamil culture.</p>
+                </div>
+
+                <!-- Navigation buttons -->
+                <div class="nav-buttons">
+                    <button id="prevButton">Previous</button>
+                    <button id="nextButton">Next</button>
+                </div>
+            </div>
+
+            <!-- Right Column: Image Gallery with Automatic Image Swapping -->
+            <div class="aus-image-column">
+                <div class="aus-image-slideshow" id="imageSlideshow">
+                    <img src="{% static 'images/seatlle-tamil-sangam.jpg' %}" alt="Tamil Course Image 1">
+                    <img src="{% static 'images/missions/missions.jpg' %}" alt="Tamil Course Image 1">
+                    <img src="{% static 'images/missions/missions-1.jpg' %}" alt="Tamil Course Image 2">
+                    <img src="{% static 'images/missions/missions-2.jpg' %}" alt="Tamil Course Image 3">
+                    <img src="{% static 'images/missions/missions-3.jpg' %}" alt="Tamil Course Image 4">
+                </div>
+            </div>
+        </div>
+    </section><br>
+    
+    <section id="gen_info" class="gen_info">
+        <h2 style="text-align: justify;" class="tamil-text">பொதுவான தகவல்</h2>
+        <br><p style="text-align: justify;" class="tamil-text">லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி" (Lake Stevens High School) அமெரிக்காவின் வாஷிங்டன் மாநிலத்தில், ஸ்போக்கேன் நகருக்கு அருகில் உள்ள லேக் ஸ்டீவன்ஸ் நகரில் அமைந்துள்ளது. இந்த பள்ளி 1968-ல் நிறுவப்பட்டது மற்றும் லேக் ஸ்டீவன்ஸ் பள்ளி மாவட்டத்தின் ஒரு பகுதியாக செயல்படுகிறது.</p><br>
+        <p style="text-align: justify;" class="tamil-text">பள்ளி மாணவர்கள் 9ஆம் வகுப்பு முதல் 12ஆம் வகுப்பு வரை கல்வி பெறுகின்றனர். அறிவியல், கணிதம், சமூக அறிவியல், மொழிபெயர்ப்பு மற்றும் கலை போன்ற பல்வேறு பாடங்களில் உயர்தர கல்வி வழங்கப்படுகிறது. மேலும், பல்வேறு விளையாட்டு அணிகள் மற்றும் கலை நிகழ்வுகள் மூலம் மாணவர்களின் திறமைகளை மேம்படுத்த உதவுகிறது.</p><br>
+        <p style="text-align: justify;" class="tamil-text">பள்ளியின் சமூகத்தில் பல்வேறு கலாச்சார பின்னணியைக் கொண்ட மாணவர்கள் உள்ளனர், இது பல்வகை பண்பாட்டை ஊக்குவிக்கிறது. மொத்தத்தில், லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி மாணவர்களுக்கு பல்வகை கல்வி மற்றும் வளர்ச்சியைக் கொண்ட ஒரு சூழலை வழங்குகிறது.</p>
+    </section><br>
+
+    <section id="library" class="library_info">
+        <h2 style="text-align: justify;" class="tamil-text">நூலகம்</h2>
+        <br><p style="text-align: justify;" class="tamil-text">நம் தமிழ்ப் பள்ளியின் நூலகம் தமிழ் மொழியின் நிபுணத்துவத்தையும் வாசிப்பின் மகிழ்ச்சியையும் ஒருங்கே அனுபவிக்க ஊக்குவிக்கப் பட்டிருக்கிறது. குழந்தைகளுக்கும் பெரியவர்களுக்கும் பொருந்தும் படி பல்வேறு கலந்தாய்வு, கதைபுத்தகங்கள், பாடநூல்கள், அறிவியல், வரலாறு, இலக்கியம் என ஏராளமான தலைப்புகளை உள்ளடக்கியதான 150-க்கும் மேற்பட்ட புத்தகங்கள் இங்கு காத்திருக்கின்றன.</p><br>
+        <p style="text-align: justify;" class="tamil-text">புத்தகங்கள் ஓர் அறிவின் சாளரம் என்பதை உணர்த்த, எளிதாக திறனாய்வு செய்யவும் கற்றல் மற்றும் கருத்துப்பரிமாற்றத்திற்கும் ஏற்ற முறையில் நாம் இந்த நூலகத்தை வடிவமைத்துள்ளோம். மாணவர்கள் மட்டுமின்றி பெற்றோர்களும் தேவைக்கேற்ற புத்தகங்களை தேர்ந்தெடுத்து வாசிப்பதன் மூலம் தமிழ் மொழியை மேலும் வலுப்படுத்திக் கொள்ளலாம். புதிதாக அறிமுகமான சிறுவர் கதைகள் முதல் தமிழின் பெருந்தகை ஆளுமைகள் குறித்து விவரிக்கும் ஆய்வுப் புத்தகங்கள் வரை இந்த நூலகம் ஒரு முழுமையான வாசிப்பின்பத்தைத் தரும் அறக்கட்டளையாக இருக்கும்.</p><br>
+        <p style="text-align: justify;" class="tamil-text">கல்வி, கலாசாரம், நுண்ணறிவு என அனைத்துக்கும் வாசிப்பு முக்கியம் என்பதைக் கருத்தில் கொண்டு, அனைவரும் இந்த நூலக அறவாசிப்பினை முழுமையாகப் பயனடைவோம். வாருங்கள், தங்கள் இலக்கியப் பயணத்தை லேக் ஸ்டீவன்ஸ் STS தமிழ்ப் பள்ளி நூலகத்தில் இனிதே தொடங்குங்கள்!</p><br>
+    </section><br>
+    <section id="events">
+        <h2 class="tamil-text">நிகழ்ச்சிகள்</h2>
+        <p class="tamil-text">தற்போதைய மற்றும் எதிர்கால நிகழ்வுகள் பற்றிய தகவல் விவரங்கள்</p>
+    
+        <!-- Debugging: Show the number of events -->
+        <p>Number of Events: {{ events|length }}</p>
+    
+        {% if events %}
+            <table class="events-table">
+                <thead>
+                    <tr>
+                        <th class="tamil-text">நிகழ்ச்சி பெயர்</th>
+                        <th class="tamil-text">தேதி</th>
+                        <th class="tamil-text">நேரம்</th>
+                        <th class="tamil-text">இடம்</th>
+                        <th class="tamil-text">விவரங்கள்</th>
+                        <th class="tamil-text">நிகழ்ச்சி ஏற்பாட்டாளர்</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                    <tr>
+                        <td>{{ event.event_name }}</td>
+                        <td>{{ event.event_date }}</td>
+                        <td>{{ event.event_time }}</td>
+                        <td>{{ event.event_location }}</td>
+                        <td>{{ event.event_description }}</td>
+                        <td>{{ event.event_organizer }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="tamil-text">நிகழ்வுகள் எதுவும் இல்லை.</p>
+        {% endif %}
+    </section>
+    
+    
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-container">
+            <div class="form-container">
+                <form action="mailto:kumarmarimuthu99@gmail.com" method="POST" enctype="text/plain">
+                    {% csrf_token %}
+                    <input type="text" id="name" placeholder="Name" name="name" required><br><br>
+                    <input type="email" id="email" name="email" placeholder="Mail ID" required><br><br>
+                    <textarea id="message" name="message" placeholder="Your Message" required></textarea><br><br>
+                    {{ form.as_p }} 
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="map-container">
+                <iframe width="100%" height="300px" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5336.936319900125!2d-122.11103484034543!3d48.02398408599893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549aacbb6de24e43%3A0x1ad4bf21371bfaa1!2sStevens%20Creek%20Elementary%20School!5e0!3m2!1sen!2sus!4v1742845828961!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="border: 1px solid black"></iframe>
+                <!-- <iframe width="100%" height="300px" src="https://www.openstreetmap.org/export/embed.html?bbox=78.00,11.75,78.12,11.85&amp;layer=mapnik&amp;marker=11.80,78.06" style="border: 1px solid black"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Tamil Class Web Page. All rights reserved.</p>
+    </footer>
+    <!-- Add this script at the end of your body -->
+    <script>
+        // JavaScript for Automatic Image Slideshow
+
+// Slideshow for About Us Section
+let currentImageIndex = 0;
+const images = document.querySelectorAll("#imageSlideshow img");
+const totalImages = images.length;
+
+// Function to show the next image in the slideshow
+function showNextImage() {
+    // Hide the current image by adding the 'hidden' class
+    images[currentImageIndex].classList.add("hidden");
+
+    // Update the index to the next image
+    currentImageIndex = (currentImageIndex + 1) % totalImages;
+
+    // Show the next image by removing the 'hidden' class
+    images[currentImageIndex].classList.remove("hidden");
+}
+
+// Run the slideshow every 3 seconds (3000ms)
+setInterval(showNextImage, 3000);
+
+// Toggle between Tamil and English content
+function toggleContent(currentContent, nextContent) {
+    currentContent.classList.remove('active');
+    nextContent.classList.add('active');
+}
+
+// Get content elements for Tamil and English text sections
+const content1 = document.getElementById('content1'); // Tamil Content
+const content2 = document.getElementById('content2'); // English Content
+
+// Initially show the Tamil content (content1)
+content1.classList.add('active');
+
+// Event listeners for the "Previous" and "Next" buttons
+document.getElementById('prevButton').addEventListener('click', function() {
+    toggleContent(content2, content1); // Show Tamil content (content1), hide English content (content2)
+});
+
+document.getElementById('nextButton').addEventListener('click', function() {
+    toggleContent(content1, content2); // Show English content (content2), hide Tamil content (content1)
+});
+
+// ---------------------------- About Us Image Gallery ----------------------------
+
+const aboutImages = document.querySelectorAll('.aus-image-slideshow img');
+const aboutSlideshow = document.querySelector('.aus-image-slideshow');
+let aboutIndex = 0;
+
+// Function to show the image at the current index in the About Us gallery
+function showAboutImage(index) {
+    if (index >= aboutImages.length) {
+        aboutIndex = 0; // Reset to the first image if index exceeds the length
+    } else if (index < 0) {
+        aboutIndex = aboutImages.length - 1; // Go to the last image if the index is negative
+    }
+
+    aboutSlideshow.style.transform = `translateX(-${aboutIndex * 100}%)`;
+}
+
+// Auto-change About Us images every 3 seconds
+setInterval(function() {
+    aboutIndex++;
+    showAboutImage(aboutIndex);
+}, 3000);
+
+// ---------------------------- Home Image Slideshow ----------------------------
+
+const homeImages = document.querySelectorAll('.home-image-slideshow img');
+const homeSlideshow = document.querySelector('.home-image-slideshow');
+let homeIndex = 0;
+
+// Function to show the image at the current index in the Home slideshow
+function showHomeImage(index) {
+    if (index >= homeImages.length) {
+        homeIndex = 0; // Reset to the first image if index exceeds the length
+    } else if (index < 0) {
+        homeIndex = homeImages.length - 1; // Go to the last image if the index is negative
+    }
+
+    homeSlideshow.style.transform = `translateX(-${homeIndex * 100}%)`;
+}
+
+// Auto-change Home images every 3 seconds
+setInterval(function() {
+    homeIndex++;
+    showHomeImage(homeIndex);
+}, 3000);
+
+// ---------------------------- Toggle Login/Signup ----------------------------
+
+// Initially hide the login/signup buttons
+document.getElementById('login-signup').style.display = "none";
+
+// Function to toggle the visibility of the login/signup buttons
+function toggleLoginSignup() {
+    const loginSignupDiv = document.getElementById('login-signup');
+    // Toggle the display between 'none' (hidden) and 'block' (visible)
+    if (loginSignupDiv.style.display === "none" || loginSignupDiv.style.display === "") {
+        loginSignupDiv.style.display = "block";  // Show the login/signup buttons
+    } else {
+        loginSignupDiv.style.display = "none";   // Hide the login/signup buttons
+    }
+}
+
+function toggleProfile() {
+            var profileDetails = document.getElementById("profile-details");
+            if (profileDetails.style.display === "block") {
+                profileDetails.style.display = "none";
+            } else {
+                profileDetails.style.display = "block";
+            }
+        }
+
+    </script>
+    
+</body>
+</html>

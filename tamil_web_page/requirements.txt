@@ -1,0 +1,5 @@
+django
+mssql-django
+django-mssql-backend
+pyodbc
+Pillow
