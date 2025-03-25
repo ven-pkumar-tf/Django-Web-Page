@@ -1,0 +1,47 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+    addToPath: true
+    architecture: 'x64'
+
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      cd tamil_web_page
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      python manage.py makemigrations
+      python manage.py migrate
+
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: 'python manage.py collectstatic --noinput'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.SourcesDirectory)/tamil_web_page'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+- task: AzureRmWebAppDeployment@5
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'aks-service-connection'
+    appType: 'webAppLinux'
+    WebAppName: 'tamil-web-page-service'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/drop'
+    RuntimeStack: 'PYTHON:3.12'
+    DeploymentTypeLinux: 'oneDeploy'
