@@ -58,4 +58,5 @@ steps:
     WebAppName: 'tamil-web-page-service'  # Your Web App name
     packageForLinux: '$(Build.ArtifactStagingDirectory)/drop'  # Correct path to the published artifact
     RuntimeStack: 'PYTHON:3.12'  # Python runtime version
+    StartupCommand: 'gunicorn tamil_web_page.wsgi:application'
     DeploymentTypeLinux: 'oneDeploy'
