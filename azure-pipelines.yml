@@ -1,0 +1,55 @@
+trigger:
+- main  # Trigger the pipeline on changes to the main branch
+
+pool:
+  vmImage: ubuntu-latest  # Use the latest Ubuntu image
+
+steps:
+# Step 1: Set up Python environment
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+    addToPath: true
+    architecture: 'x64'
+
+# Step 2: Install Python dependencies in a virtual environment
+- script: |
+    cd tamil_web_page
+    python -m venv myvenv  # Create a virtual environment
+    source myvenv/bin/activate  # Activate the virtual environment (for Linux)
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+# Step 3: Run Django migrations
+- script: |
+    cd tamil_web_page
+    source myvenv/bin/activate  # Activate the virtual environment
+    python manage.py makemigrations
+    python manage.py migrate
+  displayName: 'Run Django migrations'
+
+# Step 4: Collect static files
+- script: |
+    cd tamil_web_page
+    source myvenv/bin/activate  # Activate the virtual environment
+    python manage.py collectstatic --noinput
+  displayName: 'Collect static files'
+
+# Step 5: Publish build artifacts
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.SourcesDirectory)/tamil_web_page'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+# Step 6: Deploy to Azure Web App (Linux)
+- task: AzureRmWebAppDeployment@5
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'aks-service-connection'  # Azure connection name
+    appType: 'webAppLinux'
+    WebAppName: 'tamil-web-page-service'  # Your Web App name
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/drop'  # Correct artifact path
+    RuntimeStack: 'PYTHON:3.12'  # Python runtime version
+    DeploymentTypeLinux: 'oneDeploy'
