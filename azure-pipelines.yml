@@ -43,13 +43,19 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-# Step 6: Deploy to Azure Web App (Linux)
+# Step 6: Download the build artifacts (if needed in multi-stage pipeline)
+- task: DownloadBuildArtifacts@0
+  inputs:
+    artifactName: 'drop'
+    downloadPath: '$(Build.ArtifactStagingDirectory)'  # Path where the artifact will be downloaded
+
+# Step 7: Deploy to Azure Web App (Linux)
 - task: AzureRmWebAppDeployment@5
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'aks-service-connection'  # Azure connection name
     appType: 'webAppLinux'
     WebAppName: 'tamil-web-page-service'  # Your Web App name
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/drop'  # Correct artifact path
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/drop'  # Correct path to the published artifact
     RuntimeStack: 'PYTHON:3.12'  # Python runtime version
     DeploymentTypeLinux: 'oneDeploy'
