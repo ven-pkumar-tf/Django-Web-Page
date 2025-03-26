@@ -53,6 +53,13 @@ steps:
     packageForLinux: '$(Build.ArtifactStagingDirectory)/drop'  # Correct path to the published artifact
     RuntimeStack: 'PYTHON:3.12'  # Python runtime version
     StartupCommand: |
+      # Set the correct owner and group for the app files
+      chown -R www-data:www-data /home/site/wwwroot
+
+      # Set the correct permissions (read/write for the owner, read-only for others)
+      chmod -R 755 /home/site/wwwroot
+
       source /home/site/wwwroot/myvenv/bin/activate  # Activate the virtual environment
+      pip install gunicorn
       gunicorn tamil_web_page.wsgi:application  # Start gunicorn to serve the app
     DeploymentTypeLinux: 'oneDeploy'
