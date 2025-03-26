@@ -1,0 +1,101 @@
+name: Deploy Mojo API to dev env
+on:
+  workflow_dispatch:
+    
+env:
+  AZURE_WEBAPP_PACKAGE_PATH: ./published
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 6.0.x
+  WORKING_DIRECTORY: ""
+  CS_PROJ_PATH: OFP_API/OFP_API.csproj
+  TEST_SUITE_PROJ_PATH: TestSuite/Testsuite.csproj
+  TEST_SUITE_CONFIGURATION: Release
+
+  #AZURE_WEBAPP_NAME_DEV: tf-app-dev-mojo-api-westus-0001
+  #AZURE_WEBAPP_NAME_TEST: tf-app-test-mojo-api-westus-0001
+  #AZURE_WEBAPP_NAME_PROD: tf-app-prod-mojo-api-westus-0001
+
+  #Artifact File storage location details
+  STORAGE_ACCOUNT_NAME: "tfstdevtfstatewus01"
+  CONTAINER_NAME: "mojo-app-artifact-files"
+
+jobs:
+  build_develop:
+    #if: github.event.pull_request.base.ref == 'develop' && github.event.pull_request.merged == true
+    if: github.ref == 'refs/heads/feature/pasupathi/develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{env.DOTNET_CORE_VERSION}}
+
+      - name: Build .NET Project
+        run: dotnet build ${{env.CS_PROJ_PATH}} --configuration ${{ env.CONFIGURATION }}
+
+      - name: Publish
+        run: dotnet publish ${{env.CS_PROJ_PATH}} --configuration ${{ env.CONFIGURATION }} --no-build --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+  deploy_develop:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    needs: [build_develop]
+
+    environment: Development
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Az CLI login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      #- name: Deploy to Azure App Service
+      #  uses: azure/webapps-deploy@v2
+      #  with:
+      #    app-name: ${{ env.AZURE_WEBAPP_NAME_DEV }}
+      #    package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      - name: Create the artifact file name
+        run: |
+          # Set timezone to PST
+          export TZ="America/Los_Angeles"
+          
+          # Get the current date and time in PST
+          DEPLOYED_TIME=$(date +"%Y%m%d%H%M%S")
+          echo "DEPLOYED_TIME=$DEPLOYED_TIME" >> $GITHUB_ENV
+
+          ARTIFACT_ID="app-api-mojo-dev-$DEPLOYED_TIME"
+          echo "ARTIFACT_ID=$ARTIFACT_ID" >> $GITHUB_ENV
+
+          ARTIFACT_FILE_NAME="$ARTIFACT_ID.zip"
+          echo "ARTIFACT_FILE=$ARTIFACT_FILE_NAME" >> $GITHUB_ENV
+
+      - name: Create the Artifact File
+        run: |
+          zip -r "${{ github.workspace }}/${{ env.ARTIFACT_FILE }}" "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      
+      - name: Upload Artifact File
+        run: |
+          az storage blob upload --account-name ${{ env.STORAGE_ACCOUNT_NAME }} --container-name ${{ env.CONTAINER_NAME }} --name api/dev/${{ env.ARTIFACT_FILE }} --file ${{ github.workspace }}/${{ env.ARTIFACT_FILE }} --overwrite true --auth-mode login

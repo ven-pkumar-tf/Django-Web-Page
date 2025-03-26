@@ -1,0 +1,336 @@
+.tamil-text {
+    font-family: 'Noto Sans Tamil', sans-serif;
+}
+/* General Body Styling */
+body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f4;
+margin: 0;
+padding: 0;
+}
+
+/* General Reset */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+.profile-icon {
+display: flex;
+align-items: center;
+cursor: pointer;
+padding: 10px;
+background-color: #007bff;
+border-radius: 5px;
+color: white;
+margin-left: 20px;
+}
+
+.profile-icon img {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+margin-right: 10px;
+}
+
+.profile-icon span {
+font-size: 1.2em;
+}
+
+.profile-details {
+display: none;
+background-color: #fff;
+padding: 15px;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+margin-top: 20px;
+}
+
+.auth-buttons {
+    display: flex; /* Ensure buttons are displayed */
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+
+.auth-buttons .btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block; /* Ensure the buttons are inline */
+}
+
+.auth-buttons .btn:hover {
+    background-color: #218838;
+}
+
+
+/* Navigation Bar Styling */
+nav {
+background-color: #444;
+padding: 10px;
+position: sticky;
+top: 0;
+}
+
+nav ul {
+list-style: none;
+padding: 0;
+text-align: center;
+}
+
+nav ul li {
+display: inline-block;
+margin: 0 15px;
+}
+
+nav ul li a {
+color: white;
+text-decoration: none;
+font-size: 1.1em;
+}
+
+nav ul li a:hover {
+text-decoration: underline;
+}
+
+/* Main Content Section */
+#home {
+padding: 0;
+margin: 0;
+width: 100vw;
+height: 100vh;
+overflow: hidden;
+}
+
+/* Image Column */
+.home-image-column {
+position: relative;
+width: 100vw;
+height: 100vh;
+overflow: hidden; /* Ensures only one image is shown */
+}
+
+/* Slideshow container */
+.home-image-slideshow {
+display: flex;
+width: 100%; /* Will stretch to fit children */
+height: 100%;
+transition: transform 0.5s ease-in-out;
+}
+
+/* Each image */
+.home-image-slideshow img {
+flex: 0 0 100vw; /* Force each image to occupy exactly 100vw */
+height: 100vh;
+object-fit: cover;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+.home-image-slideshow img {
+height: 100vh;
+}
+}
+
+#about_us {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 20px;
+}
+
+.about-us-content {
+display: flex;
+width: 100%;
+}
+
+.text-column {
+width: 50%;
+padding-right: 20px;
+}
+
+/* Image Slideshow Styles */
+.aus-image-column {
+position: relative;
+width: 45%;
+overflow: hidden;
+}
+
+.aus-image-slideshow {
+display: flex;
+transition: transform 0.5s ease-in-out;
+}
+
+.aus-image-slideshow img {
+width: 100%;
+height: auto;
+flex-shrink: 0;
+object-fit: cover;
+transition: opacity 1s ease-in-out;
+}
+
+.aus-image-slideshow img.hidden {
+opacity: 0;
+}
+
+.text-content {
+display: none;
+}
+
+.text-content.active {
+display: block;
+}
+
+.nav-buttons {
+margin-top: 20px;
+}
+
+button {
+padding: 10px 20px;
+margin: 5px;
+cursor: pointer;
+}
+/* Events Section */
+#events {
+padding: 20px;
+background-color: #f9f9f9;
+border-radius: 12px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.gen_info, .library_info {
+padding-left: 20px; /* Adds padding on the left side of these sections */
+padding-right: 20px; /* Adds padding on the right side of these sections */
+}
+
+
+
+#events h2 {
+color: #2c3e50;
+font-size: 28px;
+text-align: center;
+margin-bottom: 10px;
+}
+
+#events p {
+text-align: center;
+color: #7f8c8d;
+font-size: 16px;
+margin-bottom: 20px;
+}
+
+.events-table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 10px;
+}
+
+.events-table th, .events-table td {
+border: 1px solid #ddd;
+padding: 12px 16px;
+text-align: left;
+}
+
+.events-table th {
+background-color: #3498db;
+color: white;
+}
+
+.events-table tr:nth-child(even) {
+background-color: #f2f2f2;
+}
+
+.events-table tr:hover {
+background-color: #eaf2f8;
+}
+
+/* Contact Section */
+#contact {
+padding: 50px 20px;
+text-align: center;
+}
+
+#contact h2 {
+font-size: 2rem;
+margin-bottom: 20px;
+color: #333;
+}
+
+.contact-container {
+display: flex;
+justify-content: space-between; /* Space out the form and map */
+align-items: flex-start; /* Align both items to the top */
+gap: 20px; /* Space between form and map */
+text-align: justify; /* Justify the text in the form and map */
+}
+
+.form-container {
+flex: 1; /* Make the form container take up available space */
+max-width: 50%; /* Limit the max width of the form */
+text-align: left; /* Align the form text to the left */
+}
+
+.form-container input, .form-container textarea {
+width: 100%;
+padding: 10px;
+margin-bottom: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+font-size: 1rem;
+}
+
+.form-container input[type="submit"] {
+background-color: #4CAF50;
+color: white;
+border: none;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.form-container input[type="submit"]:hover {
+background-color: #45a049;
+}
+
+.map-container {
+flex: 1; /* Make the map container take up available space */
+max-width: 50%; /* Limit the max width of the map */
+}
+
+iframe {
+width: 100%;
+height: 300px;
+border: none; /* Remove the border around the iframe */
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+.contact-container {
+    flex-direction: column; /* Stack form and map on top of each other */
+    align-items: center; /* Center-align the items */
+}
+
+.form-container, .map-container {
+    max-width: 100%; /* Make both form and map take up full width on smaller screens */
+}
+}
+/* Styles for hiding the buttons initially */
+#login-signup-buttons {
+    display: inline-block;
+    text-align: right;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff; /* Optional: add a background color for better visibility */
+    border-radius: 5px;
+}
+/* Styling for the heading */
+h1 {
+    cursor: pointer;
+    color: white;
+}
+
+h1:hover {
+    text-decoration: underline;
+}

@@ -21,14 +21,6 @@ steps:
     pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-# Step 3: Run Django migrations
-- script: |
-    cd tamil_web_page
-    source myvenv/bin/activate  # Activate the virtual environment
-    python manage.py makemigrations
-    python manage.py migrate
-  displayName: 'Run Django migrations'
-
 # Step 4: Collect static files
 - script: |
     cd tamil_web_page

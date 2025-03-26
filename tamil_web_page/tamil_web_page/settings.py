@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url  # For parsing DATABASE_URL for production
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,17 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')  # Use environment variable for security
+SECRET_KEY = 'django-insecure-&y!@=la2r7ft-%wtg03q+)d(2boh-*2-(2vg&k4rif*f#b+9p!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'  # Set to False in production
+DEBUG = True
 
-# In production, add your Azure Web App URL to ALLOWED_HOSTS
-ALLOWED_HOSTS = [
-    'tamil-web-page-service.azurewebsites.net',  # Your Azure Web App URL
-    'localhost',
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
@@ -43,8 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'home',  # Your custom app
-    'corsheaders',  # Allow cross-origin requests
+    'home',  # Make sure your 'home' app is listed here
 ]
 
 MIDDLEWARE = [
@@ -55,7 +48,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # CORS middleware
 ]
 
 ROOT_URLCONF = 'tamil_web_page.urls'
@@ -63,7 +55,7 @@ ROOT_URLCONF = 'tamil_web_page.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Template directory
+        'DIRS': [BASE_DIR / 'templates'],  # Add this line to specify your templates directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,8 +71,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'tamil_web_page.wsgi.application'
 
 
-# Database settings
-# Use dj_database_url to parse DATABASE_URL environment variable for production
+# Database
+# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
+    }
+}
+
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
@@ -94,15 +94,20 @@ DATABASES = {
         },
     }
 }
+"""
 
-# settings.py for custom user model
-AUTH_USER_MODEL = 'home.User'
+# settings.py
+
+AUTH_USER_MODEL = 'home.User'  # Tell Django to use your custom User model
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default backend
 ]
 
-# Password validation settings
+
+# Password validation
+# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -119,36 +124,31 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization settings
+# Internationalization
+# https://docs.djangoproject.com/en/5.1/topics/i18n/
+
 LANGUAGE_CODE = 'en-us'
+
 TIME_ZONE = 'UTC'
+
 USE_I18N = True
+
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images) settings
-STATIC_URL = '/static/'
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-# Ensure STATICFILES_DIRS points to where static files are located
+STATIC_URL = '/static/'
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'home', 'static')]
 
-# Azure Web App Service will serve static files from STATIC_ROOT
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Media files (optional, if you have media uploaded by users)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
+# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Security settings
-SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
-SESSION_COOKIE_SECURE = True  # Use secure cookies for sessions
-CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF
-SECURE_HSTS_SECONDS = 3600  # HTTP Strict Transport Security (HSTS) header for one hour
-
-# CORS settings for cross-origin resource sharing (optional)
-CORS_ALLOWED_ORIGINS = [
-    "https://tamil-web-page-service.azurewebsites.net",  # Your Azure Web App
-]
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
