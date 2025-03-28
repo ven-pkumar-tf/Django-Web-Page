@@ -54,11 +54,6 @@ jobs:
           artifactName: 'python-app'
           downloadPath: '$(Build.ArtifactStagingDirectory)'
 
-      # Step 9: Unzip the artifact
-      - script: |
-          unzip $(Build.ArtifactStagingDirectory)/release.zip -d $(Build.ArtifactStagingDirectory)
-        displayName: 'Unzip the artifact'
-
       # Step 10: Deploy the application to Azure Web App (Linux)
       - task: AzureRmWebAppDeployment@5
         inputs:
