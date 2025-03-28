@@ -1,5 +1,5 @@
 trigger:
-- master  # Trigger the pipeline on changes to the master branch
+- main  # Trigger the pipeline on changes to the master branch
 
 pool:
   vmImage: 'ubuntu-latest'  # Use the latest Ubuntu image
