@@ -61,7 +61,7 @@ jobs:
           azureSubscription: 'aks-service-connection'  # Replace with your Azure service connection
           appType: 'webAppLinux'
           WebAppName: 'tamil-web-page-service'  # Replace with your Azure Web App name
-          packageForLinux: '$(Build.ArtifactStagingDirectory)/release.zip'
+          packageForLinux: '/home/vsts/work/1/a/python-app/release.zip'
           RuntimeStack: 'PYTHON|3.12'  # Ensure the correct runtime stack is set for your app
           StartupCommand: 'gunicorn tamil_web_page.wsgi:application --bind=0.0.0.0'
           DeploymentTypeLinux: 'oneDeploy'
