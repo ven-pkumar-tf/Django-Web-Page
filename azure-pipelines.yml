@@ -63,6 +63,9 @@ jobs:
           WebAppName: 'tamil-web-page-service'  # Replace with your Azure Web App name
           packageForLinux: '/home/vsts/work/1/a/python-app/release.zip'
           RuntimeStack: 'PYTHON|3.12'  # Ensure the correct runtime stack is set for your app
-          StartupCommand: 'gunicorn tamil_web_page.wsgi:application --bind=0.0.0.0'
+          StartupCommand: |
+            python3 -m venv venv
+            source venv/bin/activate
+            gunicorn tamil_web_page.wsgi:application --bind=0.0.0.0
           DeploymentTypeLinux: 'oneDeploy'
         displayName: 'Deploy to Azure Web App'
