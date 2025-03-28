@@ -15,13 +15,15 @@ jobs:
 
       # Step 3: Create and activate virtual environment
       - script: |
+          cd tamil_web_page
           python -m venv venv
           source venv/bin/activate
         displayName: 'Create and activate virtual environment'
 
       # Step 4: Install dependencies
       - script: |
-          pip install -r tamil_web_page/requirements.txt
+          cd tamil_web_page
+          pip install -r requirements.txt
         displayName: 'Install dependencies'
 
       # Step 5: Collect static files
