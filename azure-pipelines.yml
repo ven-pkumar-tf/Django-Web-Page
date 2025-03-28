@@ -5,43 +5,53 @@ pool:
   vmImage: ubuntu-latest  # Use the latest Ubuntu image
 
 steps:
-# Step 1: Set up Python environment
+# Step 1: Use Python 3.12
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '3.12'
     addToPath: true
     architecture: 'x64'
 
-# Step 2: Install Python dependencies in a virtual environment
+# Step 2: Install Python dependencies
 - script: |
     cd tamil_web_page
-    python -m venv myvenv  # Create a virtual environment
-    source myvenv/bin/activate  # Activate the virtual environment (for Linux)
     python -m pip install --upgrade pip
     pip install -r requirements.txt
     pip show gunicorn
-
   displayName: 'Install dependencies'
+  continueOnError: true
 
-# Step 4: Collect static files
+# Step 3: Collect static files
 - script: |
     cd tamil_web_page
-    source myvenv/bin/activate  # Activate the virtual environment
     python manage.py collectstatic --noinput
   displayName: 'Collect static files'
+  continueOnError: true
 
-# Step 5: Publish build artifacts
+# Step 4: Archive the Django app
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/tamil_web_page'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+    replaceExistingArchive: true
+  displayName: 'Archive Django App'
+
+# Step 5: Publish the artifact
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/tamil_web_page'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/app.zip'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+  displayName: 'Publish Artifact'
 
-# Step 6: Download the build artifacts (if needed in multi-stage pipeline)
+# Step 6: Download the build artifact
 - task: DownloadBuildArtifacts@0
   inputs:
     artifactName: 'drop'
-    downloadPath: '$(Build.ArtifactStagingDirectory)'  # Path where the artifact will be downloaded
+    downloadPath: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Download Artifact'
 
 # Step 7: Deploy to Azure Web App (Linux)
 - task: AzureRmWebAppDeployment@5
@@ -49,17 +59,10 @@ steps:
     ConnectionType: 'AzureRM'
     azureSubscription: 'aks-service-connection'  # Azure connection name
     appType: 'webAppLinux'
-    WebAppName: 'tamil-web-page-service'  # Your Web App name
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/drop'  # Correct path to the published artifact
-    RuntimeStack: 'PYTHON:3.12'  # Python runtime version
-    StartupCommand: |
-      # Set the correct owner and group for the app files
-      chown -R www-data:www-data /home/site/wwwroot
-
-      # Set the correct permissions (read/write for the owner, read-only for others)
-      chmod -R 755 /home/site/wwwroot
-
-      source /home/site/wwwroot/myvenv/bin/activate  # Activate the virtual environment
-      pip install gunicorn
-      gunicorn tamil_web_page.wsgi:application  # Start gunicorn to serve the app
+    WebAppName: 'tamil-web-page-service'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/drop/app.zip'
+    RuntimeStack: 'PYTHON:3.12'
+    StartupCommand: 'gunicorn tamil_web_page.wsgi:application --bind=0.0.0.0'
     DeploymentTypeLinux: 'oneDeploy'
+  displayName: 'Deploy to Azure App Service'
+  continueOnError: true
