@@ -1,68 +1,77 @@
 trigger:
-- main  # Trigger the pipeline on changes to the main branch
+- master  # Trigger the pipeline on changes to the master branch
 
 pool:
-  vmImage: ubuntu-latest  # Use the latest Ubuntu image
+  vmImage: 'ubuntu-latest'  # Use the latest Ubuntu image
 
-steps:
-# Step 1: Use Python 3.12
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.12'
-    addToPath: true
-    architecture: 'x64'
+jobs:
+  - job: BuildAndDeploy
+    steps:
+    
+      # Step 1: Checkout the repository
+      - task: Checkout@2
+        inputs:
+          clean: true
 
-# Step 2: Install Python dependencies
-- script: |
-    cd tamil_web_page
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-    pip show gunicorn
-  displayName: 'Install dependencies'
-  continueOnError: true
+      # Step 2: Set up Python environment
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.12'  # Set Python version to 3.12
+          addToPath: true
 
-# Step 3: Collect static files
-- script: |
-    cd tamil_web_page
-    python manage.py collectstatic --noinput
-  displayName: 'Collect static files'
-  continueOnError: true
+      # Step 3: Create and activate virtual environment
+      - script: |
+          python -m venv venv
+          source venv/bin/activate
+        displayName: 'Create and activate virtual environment'
 
-# Step 4: Archive the Django app
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/tamil_web_page'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
-    replaceExistingArchive: true
-  displayName: 'Archive Django App'
+      # Step 4: Install dependencies
+      - script: |
+          pip install -r tamil_web_page/requirements.txt
+        displayName: 'Install dependencies'
 
-# Step 5: Publish the artifact
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/app.zip'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-  displayName: 'Publish Artifact'
+      # Step 5: Collect static files
+      - script: |
+          cd tamil_web_page
+          python manage.py collectstatic --noinput
+        displayName: 'Collect static files'
 
-# Step 6: Download the build artifact
-- task: DownloadBuildArtifacts@0
-  inputs:
-    artifactName: 'drop'
-    downloadPath: '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Download Artifact'
+      # Step 6: Zip the application for deployment
+      - script: |
+          zip -r release.zip ./tamil_web_page -x ./tamil_web_page/venv/\*
+        displayName: 'Zip the application for deployment'
 
-# Step 7: Deploy to Azure Web App (Linux)
-- task: AzureRmWebAppDeployment@5
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'aks-service-connection'  # Azure connection name
-    appType: 'webAppLinux'
-    WebAppName: 'tamil-web-page-service'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/drop/app.zip'
-    RuntimeStack: 'PYTHON:3.12'
-    StartupCommand: 'gunicorn tamil_web_page.wsgi:application --bind=0.0.0.0'
-    DeploymentTypeLinux: 'oneDeploy'
-  displayName: 'Deploy to Azure App Service'
-  continueOnError: true
+      # Step 7: Upload the zip artifact for deployment
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: 'release.zip'
+          ArtifactName: 'python-app'
+          publishLocation: 'Container'
+
+  - job: DeployToAzure
+    dependsOn: BuildAndDeploy
+    steps:
+
+      # Step 8: Download the zip artifact from the build job
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          artifactName: 'python-app'
+          downloadPath: '$(Build.ArtifactStagingDirectory)'
+
+      # Step 9: Unzip the artifact
+      - script: |
+          unzip $(Build.ArtifactStagingDirectory)/release.zip -d $(Build.ArtifactStagingDirectory)
+        displayName: 'Unzip the artifact'
+
+      # Step 10: Deploy the application to Azure Web App (Linux)
+      - task: AzureRmWebAppDeployment@5
+        inputs:
+          ConnectionType: 'AzureRM'
+          azureSubscription: 'aks-service-connection'  # Replace with your Azure service connection
+          appType: 'webAppLinux'
+          WebAppName: 'tamil-web-page-service'  # Replace with your Azure Web App name
+          packageForLinux: '$(Build.ArtifactStagingDirectory)/release.zip'
+          RuntimeStack: 'PYTHON|3.12'  # Ensure the correct runtime stack is set for your app
+          StartupCommand: 'gunicorn tamil_web_page.wsgi:application --bind=0.0.0.0'
+          DeploymentTypeLinux: 'oneDeploy'
+        displayName: 'Deploy to Azure Web App'
