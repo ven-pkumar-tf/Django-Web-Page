@@ -50,6 +50,6 @@ jobs:
           azureSubscription: 'aks-service-connection'
           appType: 'webAppLinux'
           appName: 'tamil-web-page-service'
-          package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+          package: '/home/vsts/work/1/a/python-app/release.zip'
           runtimeStack: 'PYTHON:3.12'
           
