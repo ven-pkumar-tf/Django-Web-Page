@@ -41,14 +41,6 @@ jobs:
           artifactName: 'python-app'
           downloadPath: '$(Build.ArtifactStagingDirectory)'
 
-      - task: AzureCLI@2
-        displayName: 'Login to Azure'
-        inputs:
-          azureSubscription: 'aks-service-connection'  # Replace with your Azure service connection
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          inlineScript: |
-            az login --service-principal -u ${{ secrets.__clientidsecretname__ }} -p ${{ secrets.__tenantidsecretname__ }} --tenant ${{ secrets.__subscriptionidsecretname__ }}
 
       - task: AzureWebApp@1
         displayName: 'Deploy to Azure Web App'
