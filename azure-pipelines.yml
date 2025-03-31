@@ -1,61 +1,57 @@
 trigger:
-- main  # Trigger the pipeline on changes to the master branch
+  - main  # Trigger the pipeline on changes to the main branch
 
 pool:
   vmImage: 'ubuntu-latest'  # Use the latest Ubuntu image
 
 jobs:
-  - job: BuildAndDeploy
+  - job: Build
+    displayName: 'Build Python App'
     steps:
-      # Step 2: Set up Python environment
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: '3.12'  # Set Python version to 3.12
+          versionSpec: '3.12'
           addToPath: true
 
-      # Step 3: Create and activate virtual environment
       - script: |
-          cd tamil_web_page
           python -m venv venv
           source venv/bin/activate
         displayName: 'Create and activate virtual environment'
 
-      # Step 4: Install dependencies
       - script: |
-          cd tamil_web_page
           pip install -r requirements.txt
         displayName: 'Install dependencies'
 
-      # Step 5: Collect static files
       - script: |
-          cd tamil_web_page
-          python manage.py collectstatic --noinput
-        displayName: 'Collect static files'
+          zip release.zip ./* -r -x "venv/*"
+        displayName: 'Zip artifact for deployment'
 
-      # Step 6: Zip the application for deployment
-      - script: |
-          zip -r release.zip ./tamil_web_page -x ./tamil_web_page/venv/\*
-        displayName: 'Zip the application for deployment'
-
-      # Step 7: Upload the zip artifact for deployment
       - task: PublishBuildArtifacts@1
         inputs:
           PathtoPublish: 'release.zip'
           ArtifactName: 'python-app'
           publishLocation: 'Container'
 
-  - job: DeployToAzure
-    dependsOn: BuildAndDeploy
+  - job: Deploy
+    displayName: 'Deploy to Azure Web App'
+    dependsOn: Build
     steps:
-
-      # Step 8: Download the zip artifact from the build job
       - task: DownloadBuildArtifacts@0
         inputs:
           artifactName: 'python-app'
           downloadPath: '$(Build.ArtifactStagingDirectory)'
 
-      # Step 10: Deploy the application to Azure Web App (Linux)
-      - task: AzureRmWebAppDeployment@5
+      - task: AzureCLI@2
+        displayName: 'Login to Azure'
+        inputs:
+          azureSubscription: 'aks-service-connection'  # Replace with your Azure service connection
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            az login --service-principal -u ${{ secrets.__clientidsecretname__ }} -p ${{ secrets.__tenantidsecretname__ }} --tenant ${{ secrets.__subscriptionidsecretname__ }}
+
+      - task: AzureWebApp@1
+        displayName: 'Deploy to Azure Web App'
         inputs:
           ConnectionType: 'AzureRM'
           azureSubscription: 'aks-service-connection'  # Replace with your Azure service connection
@@ -63,9 +59,4 @@ jobs:
           WebAppName: 'tamil-web-page-service'  # Replace with your Azure Web App name
           packageForLinux: '/home/vsts/work/1/a/python-app/release.zip'
           RuntimeStack: 'PYTHON|3.12'  # Ensure the correct runtime stack is set for your app
-          StartupCommand: |
-            python3 -m venv venv
-            source venv/bin/activate
-            gunicorn tamil_web_page.wsgi:application --bind=0.0.0.0
-          DeploymentTypeLinux: 'oneDeploy'
-        displayName: 'Deploy to Azure Web App'
+          
