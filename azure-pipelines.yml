@@ -30,7 +30,7 @@ jobs:
 
       - script: |
           cd tamil_web_page
-          zip release.zip ./* -r -x "venv/*"
+          zip tamil_web_page/release.zip ./* -r -x "venv/*"
         displayName: 'Zip artifact for deployment'
 
       - task: PublishBuildArtifacts@1
